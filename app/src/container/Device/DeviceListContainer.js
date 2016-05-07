@@ -28,7 +28,7 @@ class DeviceList extends Component {
           </li>
 
           <li className="pull-left add-device">
-            <Link to="/app/add">
+            <Link to="/app/device/add">
               <h3 className="title">新建你的设备</h3>
               <div className="text-center">
                 <Icon type="plus-circle-o"/>
