@@ -1,0 +1,22 @@
+extends common/layout
+
+block content
+    include common/header
+    include common/video_background
+
+    div.index-center-block
+        div.title
+            h1
+             span.underline Rloud
+             span ——实时数据监控云平台
+            h3
+              span.underline Rloud
+              span= " help you manage your device and show the realtime data"
+
+        div.enter.text-center
+            if user
+                a.btn.btn-lg.btn-primary.btn-raised(href="#") 立即进入管理!
+                    div.ripple-wrapper
+            else
+                a.btn.btn-lg.btn-primary.btn-raised(href="#") 立即进行体验!
+                    div.ripple-wrapper

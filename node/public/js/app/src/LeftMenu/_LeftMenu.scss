@@ -1,0 +1,43 @@
+.leftMenu {
+  width: 20%;
+  height: 100%;
+  background: #f2f0f1;
+
+  .left_header {
+    height: 70px;
+    width: 100%;
+    background: #00aa9a;
+    color: #fff;
+    text-align: center;
+    line-height: 70px;
+    font-size: 24px;
+  }
+
+  .menu {
+    width: 100%;
+    list-style: none;
+    padding: 0;
+
+    li {
+      height: 60px;
+      line-height: 60px;
+      border-bottom: 1px solid #ccc;
+      cursor: pointer;
+      padding: 5px 20px 0;
+    }
+    i {
+      font-size: 32px;
+      margin-right: 20px;
+    }
+    span {
+      font-size: 16px;
+      vertical-align: super;
+    }
+  }
+}
+
+
+
+
+
+

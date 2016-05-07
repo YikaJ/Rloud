@@ -1,0 +1,24 @@
+{
+  "name": "Rloud",
+  "description": "",
+  "main": "",
+  "authors": [
+    "YikaJ <547179699@qq.com>"
+  ],
+  "license": "MIT",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-material-design": "~0.3.0",
+    "bootstrap": "~3.3.5",
+    "echarts": "~2.2.7",
+    "socket.io": "~1.3.7"
+  }
+}

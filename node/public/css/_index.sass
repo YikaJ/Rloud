@@ -1,0 +1,26 @@
+@import "common/video_background"
+@import "common/mixins"
+
+.index-center-block
+  @include center-block(80%, 50%)
+
+  .title
+    width: 70%
+    margin: 0 auto
+    color: #dfdfdf
+    font-family: "Microsoft Sans Serif",serif
+
+    h1
+      font-size: 50px
+
+    .underline
+      text-decoration: underline
+
+  .enter
+    @extend .title
+    margin-top: 20px
+
+    a
+      width: 60%
+      height: 60px
+      line-height: 44px

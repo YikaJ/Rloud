@@ -1,0 +1,24 @@
+extends common/layout
+
+block content
+    include common/header
+    include common/video_background
+
+    div.register-center-block
+        form.form-horizontal#loginForm(action="/login", method="post")
+            legend.text-center.text-primary &emsp;&emsp;&emsp;&emsp;登陆Rloud
+            div.form-group
+                label.col-md-3.control-label(for="inputEmail") 邮箱地址
+                div.col-md-8
+                    input.form-control(name="email", type="email", id="inputEmail")
+            div.form-group
+                label.col-md-3.control-label(for="inputPassword") 密码
+                div.col-md-8
+                    input.form-control(name="password", type="password", id="inputPassword", required, pattern="[A-z0-9]{6,}", title="至少6位字母或数字密码")
+            div.form-group.form-group
+                div.col-md-8.col-md-offset-3
+                    button#submitBtn.btn.btn-primary.btn-block(type="submit") 登陆
+            div.form-group.form-group
+                div.col-md-8.col-md-offset-3
+                    a.text-danger.pull-right(href="/login") 忘记密码?
+

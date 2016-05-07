@@ -1,0 +1,13 @@
+mixin login
+    if(user)
+        a.btn.btn-reg(href="/app") #{user.username}
+        a.btn(href = "/logout") 登出
+    else
+        a.btn(href = "/login") 登入
+        a.btn.btn-reg(href="/register") 注册
+
+div.header.clearfix
+    h3.brank.pull-left
+        a.text-primary(href="/") Rloud
+    div.pull-right
+        mixin login

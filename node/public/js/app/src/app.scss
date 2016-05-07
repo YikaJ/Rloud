@@ -1,0 +1,14 @@
+@import "LeftMenu/LeftMenu";
+@import "RightContent/RightContent";
+
+html,body{
+  height: 100%;
+}
+#react_app{
+  height: 100%;
+  width: 100%;
+
+  #app{
+    height: 100%;
+  }
+}

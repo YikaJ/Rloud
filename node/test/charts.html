@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div id="main" style="height: 400px"></div>
+<script src="./echarts-all.js"></script>
+<script>
+  var myChart = echarts.init(document.querySelector("#main"));
+  var options = {
+    xAxis: {
+      type: 'category',
+      data: ["10.11", "10.12", "10.13", "10,14"]
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [{
+      type: 'bar',
+      data: [10, 20, 40, 30]
+    }]
+  };
+  myChart.setOption(options);
+</script>
+</body>
+</html>

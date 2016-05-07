@@ -1,0 +1,90 @@
+.video_background {
+  width: 100%;
+  height: 100%;
+  position: relative; }
+  .video_background .video_mask {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #333333;
+    opacity: 0.6; }
+
+.index-center-block {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 80%;
+  height: 50%; }
+  .index-center-block .title, .index-center-block .enter {
+    width: 70%;
+    margin: 0 auto;
+    color: #dfdfdf;
+    font-family: "Microsoft Sans Serif", serif; }
+    .index-center-block .title h1, .index-center-block .enter h1 {
+      font-size: 50px; }
+    .index-center-block .title .underline, .index-center-block .enter .underline {
+      text-decoration: underline; }
+  .index-center-block .enter {
+    margin-top: 20px; }
+    .index-center-block .enter a {
+      width: 60%;
+      height: 60px;
+      line-height: 44px; }
+
+.register-center-block {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  height: 40%; }
+  .register-center-block label {
+    color: #fff !important; }
+  .register-center-block input {
+    color: #fff !important; }
+
+.header {
+  position: fixed;
+  margin: auto;
+  top: 0;
+  bottom: auto;
+  left: 0;
+  right: 0;
+  width: 80%;
+  height: 70px;
+  z-index: 1; }
+  .header h3 a {
+    color: #00a896 !important;
+    font-weight: 600; }
+  .header a {
+    color: #fff !important;
+    font-size: 16px; }
+  .header .btn-reg {
+    border: 2px solid #00aa9a; }
+  .header a:hover {
+    color: #00a896 !important;
+    text-decoration: none; }
+
+body {
+  font-family: "Microsoft Sans Serif", sans-serif !important; }
+
+.text-white {
+  color: #fff !important; }
+
+.layout-error {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  top: 0;
+  bottom: auto;
+  left: 0;
+  width: 30%;
+  margin: auto; }
+
+/*# sourceMappingURL=main.css.map */

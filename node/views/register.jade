@@ -1,0 +1,33 @@
+extends common/layout
+
+block content
+    include common/header
+    include common/video_background
+
+    div.register-center-block
+        form.form-horizontal#registerForm(action="/register", method="post")
+            legend.text-center.text-primary &emsp;&emsp;&emsp;&emsp;注册您的Rloud账号
+            div.form-group
+                label.col-md-3.control-label(for="inputEmail") 邮箱地址
+                div.col-md-8
+                    input.form-control(name="email", type="email", id="inputEmail")
+            div.form-group
+                label.col-md-3.control-label(for="inputUser") 昵称
+                div.col-md-8
+                    input.form-control(name="username", type="text", id="inputUser", required, pattern="[A-z0-9]{3,}", title="至少3位字母或数字的用户名")
+                    span.material-input
+            div.form-group
+                label.col-md-3.control-label(for="inputPassword") 密码
+                div.col-md-8
+                    input.form-control(name="password", type="password", id="inputPassword", required, pattern="[A-z0-9]{6,}", title="至少6位字母或数字密码")
+            div.form-group
+                label.col-md-3.control-label(for="inputTel") 联系方式
+                div.col-md-8
+                    input.form-control(name="tel", type="tel", id="inputTel")
+            div.form-group.form-group
+                div.col-md-8.col-md-offset-3
+                    button#submitBtn.btn.btn-primary.btn-block(type="submit") 注册
+            div.form-group.form-group
+                div.col-md-8.col-md-offset-3
+                    a.text-white.pull-right(href="/login") 已经注册过账户?
+
