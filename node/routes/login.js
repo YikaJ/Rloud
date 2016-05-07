@@ -46,7 +46,7 @@ async function post(req, res, next){
       delete user.password;
       req.session.user = user;
       if(req.session.user){
-        res.json({code: 1, data: {returnUrl: "/app"}});
+        res.json({code: 0, data: {returnUrl: "/app/device"}});
       }else{
         res.json({code: 3, data: {error: config.error[3]}})
       }

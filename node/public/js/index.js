@@ -3,16 +3,16 @@
  */
 'use strict';
 
-$("#loginForm").submit(function(event){
-
-  $.post("/login", $(this).serialize())
-    .then(function(response){
-      if(response.code == 1){
-        location.href = response.data.returnUrl;
-      }else{
-        alert(response.error);
-      }
-    });
-
-  event.preventDefault();
-});
+$(function(){
+  $("#loginForm").submit(function(event){
+    event.preventDefault();
+    $.post("/login", $(this).serialize())
+      .then(function(response){
+        if(response.code == 0){
+          location.href = response.data.returnUrl;
+        }else{
+          alert(response.error);
+        }
+      });
+  });
+})

@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import configureStore from './store/configureStore'
 import router from './routes'
 
+import 'antd/lib/index.css'
 import './style/app.scss'
 
 // configureStore可以传入初始initialState

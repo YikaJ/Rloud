@@ -1,0 +1,37 @@
+@import "../../style/variables";
+
+$header-height: 70px;
+
+.app-header-wrapper {
+    background: #fff;
+}
+
+.app-header {
+    width: $container-width;
+    margin: 0 auto;
+    height: $header-height;
+    line-height: $header-height;
+
+    a {
+        color: #666;
+        &:hover{color: $green-color;}
+    }
+
+    .logo {
+        font-size: 18px;
+        font-weight: 600;
+        color: $green-color;
+    }
+
+    .username {
+        border: 2px solid $green-color;
+        padding: 5px 12px;
+        font-size: 18px;
+        margin-right: 20px;
+        text-transform: uppercase;
+    }
+
+    .logout-btn {
+        font-size: 14px;
+    }
+}

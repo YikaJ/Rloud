@@ -16,6 +16,10 @@ router.get('/', function (req, res, next) {
   res.render('index', data);
 });
 
+router.get("/app/*", filter.authorize.needLogin, (req, res, next)=>{
+  res.render("app/app");
+});
+
 /* 注册用户 */
 router.get("/register", filter.authorize.needLogout, register.get);
 router.post("/register", register.post);
