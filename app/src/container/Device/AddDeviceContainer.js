@@ -10,6 +10,7 @@ import AddDeviceForm from './AddDeviceForm'
 
 class AddDevice extends Component {
   render() {
+    const {children} = this.props
     return (
       <div className="add-device-container">
         <div className="step-bar">
@@ -18,8 +19,8 @@ class AddDevice extends Component {
             <Step title="绑定设备" status="wait" description="让硬件和软件绑定在一起"/>
           </Steps>
         </div>
-        <div className="add-device-form">
-          <AddDeviceForm />
+        <div className="add-device-content">
+          {children}
         </div>
       </div>
     )

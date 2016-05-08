@@ -11,9 +11,26 @@
             margin: 20px auto;
         }
 
-        .add-device-form {
+        .add-device-content {
             width: 640px;
             margin: 40px auto 20px;
+        }
+
+        .data-item {
+            margin-bottom: 12px;
+
+            &-name {
+                width: 300px;
+            }
+
+            &-add {
+                margin-left: 10px;
+            }
+
+            &-del{
+                color: $error-color;
+                margin-left: 10px;
+            }
         }
     }
 }
