@@ -7,7 +7,11 @@ let express = require('express');
 let router = express.Router();
 let filter = require('../filter');
 
-router.get("/", filter.authorize.needLogin, (req, res, next)=>{
+router.get("/", (req, res, next)=>{
+  res.render("app/app");
+});
+
+router.get("/*", (req, res, next)=>{
   res.render("app/app");
 });
 

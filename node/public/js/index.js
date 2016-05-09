@@ -8,10 +8,10 @@ $(function(){
     event.preventDefault();
     $.post("/login", $(this).serialize())
       .then(function(response){
-        if(response.code == 0){
+        if(response.ret == 0){
           location.href = response.data.returnUrl;
         }else{
-          alert(response.error);
+          alert(response.msg);
         }
       });
   });

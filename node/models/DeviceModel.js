@@ -11,12 +11,12 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let DeviceSchema = new Schema({
-  userId: {type: Schema.Types.ObjectId, unique: true, required: true},
+  userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  isBind: Boolean,
   name: {type: String, required: true},
-  desc: {type: String},
-  type: {type: String, required: true}
+  desc: String,
+  type: {type: String, required: true},
+  chartOption: {type: Object, required: true}
 });
-
-
 
 module.exports = mongoose.model('Device', DeviceSchema);

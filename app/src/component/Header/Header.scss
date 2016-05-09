@@ -4,6 +4,7 @@ $header-height: 70px;
 
 .app-header-wrapper {
     background: #fff;
+    border-bottom: 1px solid #dfdfdf;
 }
 
 .app-header {
@@ -28,7 +29,6 @@ $header-height: 70px;
         padding: 5px 12px;
         font-size: 18px;
         margin-right: 20px;
-        text-transform: uppercase;
     }
 
     .logout-btn {

@@ -28,7 +28,6 @@ function get(req, res, next){
 async function post(req, res, next){
     let data = req.body;
     let user = req.session.user;
-
     // 如果session不存在user,则重新从数据库获取
     if(!user){
       try{
@@ -41,14 +40,15 @@ async function post(req, res, next){
 
     // 若数据库中无此user数据,则证明账号密码错误
     if(!user){
-      res.json({code: 2, error: "账号或密码错误!"});
+      res.json({ret: 2, msg: "账号或密码错误!"});
     }else{
       delete user.password;
       req.session.user = user;
+      req.session.save();
       if(req.session.user){
-        res.json({code: 0, data: {returnUrl: "/app/device"}});
+        res.json({ret: 0, data: {returnUrl: "/app/device"}});
       }else{
-        res.json({code: 3, data: {error: config.error[3]}})
+        res.json({ret: 3, msg: config.error[3]})
       }
     }
 }

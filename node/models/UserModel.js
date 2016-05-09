@@ -32,7 +32,7 @@ let UserSchema = new Schema({
       message: "{VALUE}应该6<v<16且为字符型"
     }
   },
-  devices: [Schema.Types.ObjectId],
+  devices: [{type: Schema.Types.ObjectId, ref: 'Device'}],
   tel: Number
 });
 

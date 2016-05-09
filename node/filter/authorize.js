@@ -10,7 +10,7 @@ module.exports.needLogin = function(req, res, next){
 
   // 判断是否用户是否已经存在session中
   if(!session.user){
-    debug(req.originalUrl, "未登陆不能进入app");
+    console.error(req.originalUrl, "未登陆不能进入app");
     res.redirect("/login");
   }else{
     next();

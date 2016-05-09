@@ -29,7 +29,11 @@ module.exports = {
   devtool: 'eval',
   plugins: [
     new webpack.NoErrorsPlugin(),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.ProvidePlugin({
+      'fetch': 'imports?this=>global!exports?global.fetch!whatwg-fetch'
+    })
+
   ],
   output: {
     path: path.join(__dirname, '../node/public/js'),
@@ -46,7 +50,8 @@ module.exports = {
       action: path.join(srcPath, 'action'),
       component: path.join(srcPath, 'component'),
       actionType: path.join(srcPath, 'constant', 'actionType.js'),
-      util: path.join(srcPath, 'util')
+      util: path.join(srcPath, 'util'),
+      selector: path.join(srcPath, 'selector')
     }
   },
   module: {

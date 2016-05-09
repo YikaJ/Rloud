@@ -2,6 +2,24 @@
  * Created by YikaJ on 16/5/6.
  */
 
-export const GET_USER_REQUEST = 'GET_USER_REQUEST'
 
 export const GET_DEVICE_DATA_REQUEST = 'GET_DEVICE_DATA_REQUEST'
+
+/*
+  User entities
+ */
+export const GET_USER_REQUEST = 'GET_USER_REQUEST'
+export const GET_USER_SUCCESS = 'GET_USER_SUCCESS'
+export const GET_USER_FAILURE = 'GET_USER_FAILURE'
+
+/*
+  Device
+ */
+
+export const GET_DEVICE_REQUEST = 'GET_DEVICE_REQUEST'
+export const GET_DEVICE_SUCCESS = 'GET_DEVICE_SUCCESS'
+export const GET_DEVICE_FAILURE = 'GET_DEVICE_FAILURE'
+
+export const ADD_DEVICE_REQUEST = 'ADD_DEVICE_REQUEST'
+export const ADD_DEVICE_SUCCESS = 'ADD_DEVICE_SUCCESS'
+export const ADD_DEVICE_FAILURE = 'ADD_DEVICE_FAILURE'

@@ -27,6 +27,9 @@ async function post(req, res, next){
     res.render("login", data);
   }catch(err){
     console.error(err.message);
-    next(err);
+    res.json({
+      ret: err.code,
+      msg: err.message
+    })
   }
 }

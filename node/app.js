@@ -33,9 +33,10 @@ app.set('view engine', 'jade');
 // 中间件
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+app.use(bodyParser.raw());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser(config.session.secret));
 app.use(sessionMiddleware);
 // socket.io 共享session
 io.use(function(socket, next){
@@ -47,8 +48,8 @@ app.use(express.static(path.join(__dirname, 'public'), {
 
 // 路由分发
 app.use('/', routes);
-app.use('/app', apps);
-app.use("/api", apis);
+app.use('/api', apis);
+app.use('/app', filter.authorize.needLogin, apps);
 
 // 最后应用匹配不到相应路由的,则返回一个status:404的错误
 app.use(function(req, res, next) {

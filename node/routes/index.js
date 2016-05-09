@@ -9,15 +9,12 @@ let filter = require('../filter');
 /* 路由 */
 let register = require('./register');
 let login = require('./login');
+let api = require('./api');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
   let data = {user: req.session.user};
   res.render('index', data);
-});
-
-router.get("/app/*", filter.authorize.needLogin, (req, res, next)=>{
-  res.render("app/app");
 });
 
 /* 注册用户 */
@@ -28,6 +25,5 @@ router.post("/register", register.post);
 router.get("/login", filter.authorize.needLogout, login.get);
 router.post("/login", login.post);
 router.get("/logout", filter.authorize.needLogin, login.logout);
-
 
 module.exports = router;
