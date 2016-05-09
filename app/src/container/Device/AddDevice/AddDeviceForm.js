@@ -201,4 +201,4 @@ class AddDeviceForm extends Component {
 
 AddDeviceForm = createForm()(AddDeviceForm)
 
-export default connect(selector)(AddDeviceForm)
+export default AddDeviceForm

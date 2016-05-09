@@ -14,6 +14,7 @@ import selector from 'selector/addDevice'
 class AddDevice extends Component {
   render() {
     const {currentStep} = this.props
+
     return (
       <div className="add-device-container">
         <div className="step-bar">
@@ -23,20 +24,21 @@ class AddDevice extends Component {
           </Steps>
         </div>
         <div className="add-device-content">
-          {this.renderContent(currentStep)}
+          {this.renderContent()}
         </div>
       </div>
     )
   }
 
-  renderContent(currentStep) {
-    console.log(currentStep)
+  renderContent() {
+    const {currentStep} = this.props
+
     switch(currentStep) {
       case 0:
-        return <AddDeviceForm />
+        return <AddDeviceForm {...this.props} />
 
       case 1:
-        return <BindDeviceForm />
+        return <BindDeviceForm {...this.props} />
     }
 
   }

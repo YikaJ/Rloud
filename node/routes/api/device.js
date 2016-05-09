@@ -35,18 +35,6 @@ router.post("/createDevice", async function(req, res, next) {
     })
   }
 
-  //try {
-  //  await UserModel.findByIdAndUpdate(userId, {
-  //    $push: {devices: device._id}
-  //  })
-  //} catch (err) {
-  //  console.error('错误,无法更新用户的设备信息', err.message)
-  //  res.json({
-  //    ret: 3,
-  //    msg: err.message
-  //  })
-  //}
-
   console.log("设备注册成功,等待绑定")
 
   res.json({
@@ -58,8 +46,15 @@ router.post("/createDevice", async function(req, res, next) {
 
 });
 
-router.post("/bindDevice", function(req, res, next) {
-  next()
+router.post("/postBindCode", function(req, res, next) {
+  const bindCode = req.body['bindCode']
+
+  res.json({
+    ret: 0,
+    data: {
+      bindCode
+    }
+  })
 });
 
 module.exports = router
