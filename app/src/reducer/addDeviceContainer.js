@@ -20,7 +20,8 @@ export default function reducer(state = initialState, action) {
     case ADD_DEVICE_SUCCESS:
       return {
         ...state,
-        currentStep: 1
+        currentStep: 1,
+        deviceId: payload.deviceId
       }
 
     case POST_BIND_CODE_REQUEST:

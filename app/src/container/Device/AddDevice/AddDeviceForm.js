@@ -4,7 +4,7 @@
 
 import React, {Component, PropTypes} from 'react'
 import classnames from 'classnames'
-import autobind from 'util/autobind'
+import autobind from 'myUtil/autobind'
 import {connect} from 'react-redux'
 
 import {registerDevice} from 'action/device'

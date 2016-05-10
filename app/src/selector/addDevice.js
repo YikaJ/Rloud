@@ -8,9 +8,9 @@ const addDeviceContainerSelector = state => state.addDeviceContainer
 
 const selector = createSelector(
   addDeviceContainerSelector,
-  ({currentStep, bindCode}) => {
+  ({currentStep, bindCode, deviceId}) => {
     return {
-      currentStep, bindCode
+      currentStep, bindCode, deviceId
     }
   }
 )

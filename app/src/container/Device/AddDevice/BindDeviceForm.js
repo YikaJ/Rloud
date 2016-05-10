@@ -4,7 +4,7 @@
 
 import React, {Component, PropTypes} from 'react'
 import { Input, Button, Row, Col} from 'antd'
-import autobind from 'util/autobind'
+import autobind from 'myUtil/autobind'
 
 import {getBindCode} from 'action/device'
 
@@ -33,7 +33,7 @@ class BindDevice extends Component {
             <Input size="large" value={bindCode} readOnly/>
           </Col>
           <Col span="6" offset="1">
-            <Button disabled={bindCode || isLoading} size="large" onClick={this.getBindCode}>
+            <Button  size="large" onClick={this.getBindCode}>
               {isLoading ? '正在获取中...' :
                bindCode ? '已获绑定码' : '获取绑定码'
               }

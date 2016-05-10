@@ -50,7 +50,7 @@ module.exports = {
       action: path.join(srcPath, 'action'),
       component: path.join(srcPath, 'component'),
       actionType: path.join(srcPath, 'constant', 'actionType.js'),
-      util: path.join(srcPath, 'util'),
+      myUtil: path.join(srcPath, 'util'),
       selector: path.join(srcPath, 'selector')
     }
   },
@@ -72,6 +72,10 @@ module.exports = {
           'css?modules&importLoaders=1&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
           'sass-loader?outputStyle=expanded'
         ]
+      },
+      {
+        test: /\.json$/,
+        loader: 'json'
       },
       {
         test: /\.(png|jpg|gif|woff|woff2)$/,
