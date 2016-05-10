@@ -19,6 +19,7 @@
                 border-radius: 2px;
                 background: #fefefe;
                 border: 1px solid #ccc;
+                border-right: 3px solid $green-color;
                 padding: 18px;
                 margin: 20px;
                 width: 300px;
@@ -27,8 +28,8 @@
                 transition: all 0.3s ease;
 
                 &:hover {
-                    border: 1px solid $green-color;
-                    box-shadow: $green-color 0 0 10px;
+                    border-right: 3px solid $green-color;
+                    box-shadow: $green-color 2px 3px 10px 1px;
                     transform: translate(0, -10px);
                 }
 

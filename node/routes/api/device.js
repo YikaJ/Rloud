@@ -46,8 +46,12 @@ router.post("/createDevice", async function(req, res, next) {
 
 });
 
-router.post("/postBindCode", function(req, res, next) {
-  const bindCode = req.body['bindCode']
+router.post("/getBindCode", function(req, res, next) {
+  const bindCode = (Date.now() + parseInt(1000 * Math.random())).toString(36)
+  const deviceId = req.body['deviceId']
+
+  // 将 bindCode 存储到 session 内,等待激活
+  req.session.bindDevice = {bindCode, deviceId}
 
   res.json({
     ret: 0,

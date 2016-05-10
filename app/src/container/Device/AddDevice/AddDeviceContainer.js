@@ -24,14 +24,13 @@ class AddDevice extends Component {
           </Steps>
         </div>
         <div className="add-device-content">
-          {this.renderContent()}
+          {this.renderContent(currentStep)}
         </div>
       </div>
     )
   }
 
-  renderContent() {
-    const {currentStep} = this.props
+  renderContent(currentStep) {
 
     switch(currentStep) {
       case 0:

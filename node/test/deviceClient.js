@@ -21,3 +21,20 @@ let client = net.connect({port: 3334}, ()=>{
     client.write(JSON.stringify(data));
   }, 3000 * Math.random());
 });
+
+const bindDevice = {
+  secret: 'Rloud',
+  type: 'bindDevice',
+  bindCode: '',
+  deviceId: '',
+  email: '',
+  password: ''
+}
+
+const chartData = {
+  secret: 'Rloud',
+  type: 'chartData',
+  userId: '',
+  deviceId: '',
+  data: {}
+}

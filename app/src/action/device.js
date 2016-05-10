@@ -34,15 +34,14 @@ export function registerDevice(payload) {
   }
 }
 
-export function postBindCode(payload) {
+export function getBindCode(payload) {
   return {
     [CALL_API]: {
       types: [POST_BIND_CODE_REQUEST, POST_BIND_CODE_SUCCESS, POST_BIND_CODE_FAILURE],
-      request: '/api/postBindCode',
+      request: '/api/getBindCode',
       method: 'POST',
       payload: {
-        ...payload,
-        bindCode: (Date.now() + parseInt(1000 * Math.random())).toString(36)
+        ...payload
       }
     }
   }

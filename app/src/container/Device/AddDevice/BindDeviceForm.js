@@ -6,14 +6,14 @@ import React, {Component, PropTypes} from 'react'
 import { Input, Button, Row, Col} from 'antd'
 import autobind from 'util/autobind'
 
-import {postBindCode} from 'action/device'
+import {getBindCode} from 'action/device'
 
 class BindDevice extends Component {
 
   @autobind
-  postBindCode() {
-    const {dispatch} = this.props
-    dispatch(postBindCode())
+  getBindCode() {
+    const {dispatch, deviceId} = this.props
+    dispatch(getBindCode({deviceId}))
   }
 
   componentDidMount() {
@@ -33,7 +33,7 @@ class BindDevice extends Component {
             <Input size="large" value={bindCode} readOnly/>
           </Col>
           <Col span="6" offset="1">
-            <Button disabled={bindCode || isLoading} size="large" onClick={this.postBindCode}>
+            <Button disabled={bindCode || isLoading} size="large" onClick={this.getBindCode}>
               {isLoading ? '正在获取中...' :
                bindCode ? '已获绑定码' : '获取绑定码'
               }

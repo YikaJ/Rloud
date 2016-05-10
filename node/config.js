@@ -23,5 +23,8 @@ module.exports = {
       2: '账号或密码有误',
       3: 'session服务器有误'
     }
+  },
+  deviceServer: {
+    secret: 'Rloud d-server'
   }
 };

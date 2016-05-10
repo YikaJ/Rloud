@@ -44,7 +44,6 @@ async function post(req, res, next){
     }else{
       delete user.password;
       req.session.user = user;
-      req.session.save();
       if(req.session.user){
         res.json({ret: 0, data: {returnUrl: "/app/device"}});
       }else{
