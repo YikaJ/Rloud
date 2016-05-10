@@ -27,8 +27,10 @@ const bindDevice = {
   type: 'bindDevice',
   bindCode: '',
   deviceId: '',
-  email: '',
-  password: ''
+  user: {
+    email: '',
+    passwrod: ''
+  }
 }
 
 const chartData = {

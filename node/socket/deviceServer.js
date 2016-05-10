@@ -5,13 +5,14 @@
  */
 'use strict';
 let net = require('net');
-let ioEvent = require('./IOEvent');
+let deviceEvent = require('./deviceEvent');
 let filter = require('../filter/deviceData');
 
 let server = net.createServer((socket)=>{
   socket.on('data', (res)=>{
     const jsonData = filter(JSON.parse(res.toString()))
-    jsonData && ioEvent.write(jsonData);
+    // 只有第一级符合规范的才可以被转发到事件系统中
+    jsonData && deviceEvent.emit(jsonData)
   });
 });
 
