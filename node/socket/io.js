@@ -5,40 +5,60 @@
 'use strict';
 let io = require('socket.io')();
 let deviceEvent = require('./deviceEvent');
+const { BIND_DEVICE, CHART_DATA, SEND_TO_DEVICE } = deviceEvent.eventName
 
 require('./deviceServer')();
 
 io.on("connection", (socket)=>{
-  let req = socket.request;
-  let user = req.session.user;
+  let { session } = socket.request;
+  let sessionUser = session.user
+  let sessionDevice = session.bindDevice
 
   // 如果没有
-  if(!user){
+  if(!sessionUser){
     socket.emit("err", "no user login");
   }else{
     console.log('New websocket client connected!');
 
     deviceEvent.listenEvent((jsonData) => {
-      let { type, userId, data } = jsonData
-      const { bindDeviceEventName } = deviceEvent.eventName
 
-      data = Object.assign({}, {ret: 0, data})
-
-      // 绑定设备需要登陆账号获取 userId
-      if( type === bindDeviceEventName ) {
-        try {
-          userId = getUser(jsonData.user)._id
-        } catch (err) {
-          type = 'error'
-          data = {
-            ret: 1,
-            msg: '账号或密码错误'
-          }
-        }
+      switch(jsonData.type) {
+        case BIND_DEVICE:
+          return bindDeviceCallback()
+        case CHART_DATA:
+          return chartDataCallback()
       }
 
-      (userId === user._id) && socket.emit(type, data)
     });
+  }
+
+  async function bindDeviceCallback(jsonData){
+    const {user, device: {deviceId, bindCode}} = jsonData
+
+    const userId = await UserModel.findOne(user)._id
+
+    // 用户鉴权和绑定码对应成功后,需要同时向两端发送 response 告诉已经成功
+    if(userId === sessionUser._id && sessionDevice.bindCode === bindCode) {
+      // response device
+      deviceEvent.emit(SEND_TO_DEVICE, {
+        ret: 0,
+        data: {userId, deviceId}
+      })
+
+      //response client
+      socket.emit(BIND_DEVICE, {
+        ret: 0,
+        data: {deviceId}
+      })
+    }
+  }
+
+  function chartDataCallback(jsonData) {
+    const { userId, data } = jsonData
+
+    if(userId === sessionUser._id) {
+      socket.emit(CHART_DATA, {ret: 0, data})
+    }
   }
 
   // 当取消连接后,解除ioEvent的监听
@@ -48,12 +68,8 @@ io.on("connection", (socket)=>{
   });
 });
 
-async function getUser(data) {
-  try {
-    return await UserModel.findOne(data)
-  } catch (err) {
-    return err.message
-  }
-}
+
+
+function chartDataCallback() {}
 
 module.exports = io;

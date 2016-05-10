@@ -2,41 +2,39 @@
  * Created by YikaJ on 15/12/2.
  */
 'use strict';
-
 let net = require('net');
-let client = net.connect({port: 3334}, ()=>{
-  console.log("client connected");
-  setInterval(()=>{
-    const data = {
-      token: "xsahudhsaudhwquq",
-      userId: "565e45129c5c5e4303e409a6",
-      type: 'iodata',
-      data: [
-        {
-          deviceId: '1',
-          value: 15 * Math.random().toFixed(2)
-        }
-      ]
-    };
-    client.write(JSON.stringify(data));
-  }, 3000 * Math.random());
-});
 
 const bindDevice = {
-  secret: 'Rloud',
+  secret: 'Rloud d-server',
   type: 'bindDevice',
-  bindCode: '',
-  deviceId: '',
   user: {
-    email: '',
-    passwrod: ''
+    email: 'jimklose@icloud.com',
+    passwrod: '5710569'
+  },
+  device: {
+    bindCode: ''
   }
 }
 
 const chartData = {
-  secret: 'Rloud',
+  secret: 'RRloud d-serverloud',
   type: 'chartData',
   userId: '',
-  deviceId: '',
-  data: {}
+  data: {
+    deviceId: ''
+  }
 }
+
+let client = net.connect({port: 3334}, ()=>{
+  console.log("client connected");
+  client.write(JSON.stringify(bindDevice));
+});
+
+client.on('data', data => {
+  console.log(data.toString())
+  client.end()
+})
+
+client.on('end', () => {
+  console.log('client disconnected')
+})

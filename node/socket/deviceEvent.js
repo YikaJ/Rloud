@@ -22,8 +22,9 @@ class IOEvent {
 
     // 定义设备传输的事件名,包括数据和绑定设备
     this.eventName = {
-      chartDataEventName: 'cden',
-      bindDeviceEventName: 'bden'
+      CHART_DATA: 'cden',
+      BIND_DEVICE: 'bden',
+      SEND_TO_DEVICE: 'stden'
     }
   }
 
@@ -35,8 +36,8 @@ class IOEvent {
   }
 
   // 从设备服务器处触发事件
-  emitEvent(eventName, jsonData) {
-    this.ev.emit(eventName, jsonData)
+  emitEvent(jsonData) {
+    this.ev.emit(jsonData.type, jsonData)
   }
 
   clean(eventName) {

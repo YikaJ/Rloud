@@ -51,7 +51,7 @@ router.post("/getBindCode", function(req, res, next) {
   const deviceId = req.body['deviceId']
 
   // 将 bindCode 存储到 session 内,等待激活
-  req.session.bindDevice = {bindCode, deviceId}
+  req.session.bindDevice = { bindCode, deviceId }
 
   res.json({
     ret: 0,
