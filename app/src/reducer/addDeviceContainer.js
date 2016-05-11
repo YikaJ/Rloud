@@ -4,7 +4,8 @@
 
 import {
   ADD_DEVICE_SUCCESS,
-  POST_BIND_CODE_SUCCESS, POST_BIND_CODE_REQUEST
+  POST_BIND_CODE_SUCCESS, POST_BIND_CODE_REQUEST,
+  CLEAR_DEVICE_FORM, START_TO_BIND_DEVICE
 } from 'actionType'
 
 const initialState = {
@@ -35,6 +36,16 @@ export default function reducer(state = initialState, action) {
         ...state,
         bindCode: payload.bindCode,
         isLoading: false
+      }
+
+    case CLEAR_DEVICE_FORM:
+      return initialState
+
+    case START_TO_BIND_DEVICE:
+      return {
+        ...state,
+        ...payload,
+        currentStep: 1
       }
 
     default:

@@ -7,8 +7,15 @@
 let net = require('net');
 let deviceEvent = require('./deviceEvent');
 let filter = require('../filter/deviceData');
+const {SEND_TO_DEVICE} = deviceEvent.eventName
 
 let server = net.createServer((socket)=>{
+
+  console.log('TCP已连接')
+  // 事件: 发送数据给 Device
+  deviceEvent.event.once(SEND_TO_DEVICE, (jsonData) => {
+    socket.write(JSON.stringify(jsonData))
+  })
 
   // 从 Device 处接收到数据
   socket.on('data', (res)=>{
@@ -17,11 +24,9 @@ let server = net.createServer((socket)=>{
     jsonData && deviceEvent.emitEvent(jsonData)
   });
 
-  // 发送数据给 Device
-  deviceEvent.on(
-    deviceEvent.eventName.SEND_TO_DEVICE,
-    (jsonData) => socket.write(JSON.stringify(jsonData))
-  )
+  socket.on('end', () => console.log('TCP 连接已断开'))
+
+  socket.on('error', (err) => console.error(err))
 });
 
 module.exports = function(){

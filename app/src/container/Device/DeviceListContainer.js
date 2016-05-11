@@ -17,16 +17,10 @@ class DeviceList extends Component {
         <h1 className="title">设备列表</h1>
         <ul className="device-list clearfix">
           {Object.keys(deviceList).map((deviceId)=>{
-            const {name, desc} = deviceList[deviceId]
-            return (
-              <li className="pull-left" key={deviceId}>
-                <Link to="/app/data">
-                  <h3 className="device-name">{name}</h3>
-                  <div>{desc}</div>
-                  <div>昨日平均值: 25</div>
-                </Link>
-              </li>
-            )
+            const {name, desc, isBind} = deviceList[deviceId]
+            return isBind ?
+              this.renderDeviceItem({name, desc, deviceId}) :
+              this.renderBindItem({name, deviceId})
           })}
 
           <li className="pull-left add-device">
@@ -40,6 +34,29 @@ class DeviceList extends Component {
 
         </ul>
       </div>
+    )
+  }
+
+  renderDeviceItem({name, desc, deviceId}) {
+    return (
+      <li className="pull-left" key={deviceId}>
+        <Link to="/app/data">
+          <h3 className="device-name">{name}</h3>
+          <div>{desc}</div>
+          <div>昨日平均值: 25</div>
+        </Link>
+      </li>
+    )
+  }
+
+  renderBindItem({name, deviceId}) {
+    return (
+      <li className="pull-left" key={deviceId}>
+        <Link to="/app/data">
+          <h3 className="device-name">{name}</h3>
+          <h5>need to bind!</h5>
+        </Link>
+      </li>
     )
   }
 }

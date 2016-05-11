@@ -50,7 +50,7 @@ module.exports = {
       action: path.join(srcPath, 'action'),
       component: path.join(srcPath, 'component'),
       actionType: path.join(srcPath, 'constant', 'actionType.js'),
-      myUtil: path.join(srcPath, 'util'),
+      myUtil: path.join(srcPath, 'myUtil'),
       selector: path.join(srcPath, 'selector')
     }
   },

@@ -10,7 +10,7 @@ import {getUser} from 'action/user'
 import {getDevice} from 'action/device'
 
 // 开启 socket.io 连接
-const socket = require('socket.io-client')('http://localhost:3333');
+import socket from 'myUtil/socketio'
 
 class App extends Component {
 
@@ -19,9 +19,7 @@ class App extends Component {
     dispatch(getUser())
     dispatch(getDevice())
 
-    socket.on('connect', () => {
-      console.log('connect to ws')
-    })
+    socket.on('connect', () => console.log('已连接到 WebSocket!'))
   }
 
   render() {

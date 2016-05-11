@@ -4,7 +4,9 @@
 
 import React, {Component, PropTypes} from 'react'
 import { Input, Button, Row, Col} from 'antd'
+import {browserHistory} from 'react-router'
 import autobind from 'myUtil/autobind'
+import socket from 'myUtil/socketio'
 
 import {getBindCode} from 'action/device'
 
@@ -17,7 +19,12 @@ class BindDevice extends Component {
   }
 
   componentDidMount() {
-    // Todo 开启监听
+    // 开启监听
+    socket.on('bden', (res) => {
+      if(res.ret === 0) {
+        browserHistory.replace(`/app/data/${res.data.deviceId}`)
+      }
+    })
   }
 
   componentWillUnmount() {
@@ -33,7 +40,7 @@ class BindDevice extends Component {
             <Input size="large" value={bindCode} readOnly/>
           </Col>
           <Col span="6" offset="1">
-            <Button  size="large" onClick={this.getBindCode}>
+            <Button disabled={!!bindCode || !!isLoading} size="large" onClick={this.getBindCode}>
               {isLoading ? '正在获取中...' :
                bindCode ? '已获绑定码' : '获取绑定码'
               }

@@ -6,27 +6,27 @@ let net = require('net');
 
 const bindDevice = {
   secret: 'Rloud d-server',
-  type: 'bindDevice',
+  type: 'bden',
   user: {
     email: 'jimklose@icloud.com',
-    passwrod: '5710569'
+    password: '5710569'
   },
   device: {
-    bindCode: ''
+    bindCode: 'io2jyvnc'
   }
 }
 
 const chartData = {
   secret: 'RRloud d-serverloud',
-  type: 'chartData',
-  userId: '',
+  type: 'cden',
+  userId: '.',
   data: {
     deviceId: ''
   }
 }
 
-let client = net.connect({port: 3334}, ()=>{
-  console.log("client connected");
+const client = net.connect({port: 3334}, ()=>{
+  console.log("客户端: TCP连接成功");
   client.write(JSON.stringify(bindDevice));
 });
 
@@ -36,5 +36,6 @@ client.on('data', data => {
 })
 
 client.on('end', () => {
-  console.log('client disconnected')
+  console.log('')
 })
+

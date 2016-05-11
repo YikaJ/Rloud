@@ -37,11 +37,13 @@ app.use(bodyParser.raw());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser(config.session.secret));
-app.use(sessionMiddleware);
+
 // socket.io 共享session
 io.use(function(socket, next){
-  sessionMiddleware(socket.request, {}, next);
+  sessionMiddleware(socket.request, socket.request.res, next);
 });
+app.use(sessionMiddleware);
+
 app.use(express.static(path.join(__dirname, 'public'), {
   maxAge: 7 * 24 * 60 * 60
 }));

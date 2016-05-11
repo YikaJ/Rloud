@@ -17,7 +17,7 @@ class Header extends Component {
             <a href="/" styleName="logo">Rloud</a>
           </div>
           <div className="pull-right">
-            <a href="/" styleName="username">{me.username || '游客'}</a>
+            <a href="/app" styleName="username">{me.username || '游客'}</a>
             <a href="/logout" styleName="logout-btn">登出</a>
           </div>
         </div>

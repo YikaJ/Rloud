@@ -56,7 +56,7 @@ router.post("/getBindCode", function(req, res, next) {
   res.json({
     ret: 0,
     data: {
-      bindCode
+      bindCode, deviceId
     }
   })
 });

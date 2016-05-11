@@ -5,6 +5,8 @@
 'use strict';
 let io = require('socket.io')();
 let deviceEvent = require('./deviceEvent');
+const UserModel = require('../models/UserModel');
+const DeviceModel = require('../models/DeviceModel');
 const { BIND_DEVICE, CHART_DATA, SEND_TO_DEVICE } = deviceEvent.eventName
 
 require('./deviceServer')();
@@ -12,7 +14,6 @@ require('./deviceServer')();
 io.on("connection", (socket)=>{
   let { session } = socket.request;
   let sessionUser = session.user
-  let sessionDevice = session.bindDevice
 
   // 如果没有
   if(!sessionUser){
@@ -21,26 +22,36 @@ io.on("connection", (socket)=>{
     console.log('New websocket client connected!');
 
     deviceEvent.listenEvent((jsonData) => {
-
       switch(jsonData.type) {
         case BIND_DEVICE:
-          return bindDeviceCallback()
+          return bindDeviceCallback(jsonData)
         case CHART_DATA:
-          return chartDataCallback()
+          return chartDataCallback(jsonData)
       }
-
     });
   }
 
   async function bindDeviceCallback(jsonData){
-    const {user, device: {deviceId, bindCode}} = jsonData
+    const {user, device: { bindCode }} = jsonData
+    let userId
+    try {
+      const dbUser = await UserModel.findOne(user)
+      userId = dbUser._id
+    } catch(err) {
+      console.error(err)
+    }
 
-    const userId = await UserModel.findOne(user)._id
 
     // 用户鉴权和绑定码对应成功后,需要同时向两端发送 response 告诉已经成功
-    if(userId === sessionUser._id && sessionDevice.bindCode === bindCode) {
+    session = await reloadSession()
+    let sessionDevice = session.bindDevice
+    const deviceId = sessionDevice.deviceId
+    if(userId == sessionUser._id && sessionDevice.bindCode == bindCode) {
+      // 让设备设为已绑定状态
+      await DeviceModel.findOneAndUpdate({userId, _id: deviceId}, {$set: {isBind: true}})
+
       // response device
-      deviceEvent.emit(SEND_TO_DEVICE, {
+      deviceEvent.event.emit(SEND_TO_DEVICE, {
         ret: 0,
         data: {userId, deviceId}
       })
@@ -50,7 +61,14 @@ io.on("connection", (socket)=>{
         ret: 0,
         data: {deviceId}
       })
+
+    } else {
+      deviceEvent.event.emit(SEND_TO_DEVICE, {
+        ret: 1,
+        msg: 'error: 账号或者密码错误'
+      })
     }
+
   }
 
   function chartDataCallback(jsonData) {
@@ -61,10 +79,24 @@ io.on("connection", (socket)=>{
     }
   }
 
+  // 根据 sessionId 更新 session
+  function reloadSession() {
+    const {sessionStore, sessionID} = socket.request
+
+    return new Promise((resolve, reject)=>{
+      sessionStore.get(sessionID, (err, session) => {
+        if(err) {
+          return reject(err)
+        }
+
+        resolve(session)
+      })
+    })
+  }
+
   // 当取消连接后,解除ioEvent的监听
   socket.on("disconnect", ()=>{
     console.log("client disconnect");
-    ioEvent.clean();
   });
 });
 

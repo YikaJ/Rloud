@@ -28,20 +28,25 @@ class IOEvent {
     }
   }
 
-  // 应用服务器监听事件
+  // 应用服务器监听事件,包括图表需要的数据和绑定设备时需要输入BIND CODE
   listenEvent(callback) {
-    Object.keys(this.eventName).forEach((eventName) => {
-      this.ev.on(eventName, jsonData => callback(jsonData))
+    const {CHART_DATA, BIND_DEVICE} = this.eventName
+    const events = [CHART_DATA, BIND_DEVICE]
+
+    events.forEach((eventName) => {
+      this.event.on(eventName, jsonData => callback(jsonData))
     })
   }
 
-  // 从设备服务器处触发事件
+  // 从设备服务器取到jsonData后触发事件
   emitEvent(jsonData) {
-    this.ev.emit(jsonData.type, jsonData)
+    this.event.emit(jsonData.type, jsonData)
   }
 
   clean(eventName) {
-    this.ev.removeListener(eventName)
+    this.event.removeListener(eventName)
   }
 }
-module.exports = new IOEvent();
+
+const event = new IOEvent()
+module.exports = event;
