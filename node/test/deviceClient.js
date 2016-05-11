@@ -12,7 +12,7 @@ const bindDevice = {
     password: '5710569'
   },
   device: {
-    bindCode: 'io2jyvnc'
+    bindCode: 'io2rvz5a'
   }
 }
 

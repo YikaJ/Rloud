@@ -10,8 +10,16 @@ import {Steps} from 'antd'
 const Step = Steps.Step
 
 import selector from 'selector/addDevice'
+import {clearDeviceForm} from 'action/device'
 
 class AddDevice extends Component {
+
+  componentWillUnmount() {
+    const {dispatch} = this.props
+    dispatch(clearDeviceForm())
+  }
+
+
   render() {
     const {currentStep} = this.props
 

@@ -7,7 +7,14 @@ import selector from 'selector/deviceList'
 import {Link} from 'react-router'
 import {Icon} from 'antd'
 
+import {startToBind} from 'action/device'
+
 class DeviceList extends Component {
+
+  startBind(deviceId) {
+    const {dispatch} = this.props
+    dispatch(startToBind(deviceId))
+  }
 
   render() {
     const {deviceList} = this.props
@@ -20,7 +27,7 @@ class DeviceList extends Component {
             const {name, desc, isBind} = deviceList[deviceId]
             return isBind ?
               this.renderDeviceItem({name, desc, deviceId}) :
-              this.renderBindItem({name, deviceId})
+              this.renderBindItem({name, desc, deviceId})
           })}
 
           <li className="pull-left add-device">
@@ -40,7 +47,7 @@ class DeviceList extends Component {
   renderDeviceItem({name, desc, deviceId}) {
     return (
       <li className="pull-left" key={deviceId}>
-        <Link to="/app/data">
+        <Link to={`/app/data/${deviceId}`}>
           <h3 className="device-name">{name}</h3>
           <div>{desc}</div>
           <div>昨日平均值: 25</div>
@@ -49,12 +56,12 @@ class DeviceList extends Component {
     )
   }
 
-  renderBindItem({name, deviceId}) {
+  renderBindItem({name, deviceId, desc}) {
     return (
-      <li className="pull-left" key={deviceId}>
-        <Link to="/app/data">
+      <li className="pull-left need-bind-item" key={deviceId}>
+        <Link to="/app/add" onClick={() => this.startBind(deviceId)}>
           <h3 className="device-name">{name}</h3>
-          <h5>need to bind!</h5>
+          <div>{desc}</div>
         </Link>
       </li>
     )

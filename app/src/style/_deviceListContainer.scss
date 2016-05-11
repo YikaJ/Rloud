@@ -29,7 +29,7 @@
 
                 &:hover {
                     border-right: 3px solid $green-color;
-                    box-shadow: $green-color 2px 3px 10px 1px;
+                    box-shadow: $green-color 2px 2px 10px 1px;
                     transform: translate(0, -10px);
                 }
 
@@ -44,6 +44,37 @@
                 }
 
 
+            }
+
+            .need-bind-item a{
+                border-right: 3px solid $error-color;
+                position: relative;
+                overflow: hidden;
+
+                .device-name {
+                    color: $error-color;
+                }
+
+                &:hover {
+                    box-shadow: $error-color 2px 2px 10px 1px;
+                    border-right: 3px solid $error-color;
+                }
+
+                &:after {
+                    content: '未绑定';
+                    display: block;
+                    position: absolute;
+                    color: #fff;
+                    background: #f50;
+                    height: 50px;
+                    text-align: center;
+                    line-height: 74px;
+                    font-weight: 600;
+                    width: 100px;
+                    top: 0;
+                    right: 0;
+                    transform: rotate(45deg) translate(18px, -35px);
+                }
             }
         }
     }
