@@ -6,11 +6,13 @@ import { syncHistoryWithStore, routerReducer } from 'react-router-redux'
 
 import entities from './entities'
 import addDeviceContainer from './addDeviceContainer'
+import deviceDataContainer from './deviceDataContainer'
 
 const rootReducer = combineReducers({
   routing: routerReducer,
   entities,
-  addDeviceContainer
+  addDeviceContainer,
+  deviceDataContainer
 })
 
 export default rootReducer

@@ -3,8 +3,8 @@
  */
 
 import {
-  ADD_DEVICE_SUCCESS,
-  GET_DEVICE_SUCCESS
+  ADD_DEVICE_SUCCESS, GET_DEVICE_SUCCESS,
+  UPDATE_DEVICE_DATA
 } from 'actionType'
 
 export default function reducer(state={}, action) {
@@ -23,6 +23,24 @@ export default function reducer(state={}, action) {
         ...state,
         [payload.deviceId]: payload
       }
+    
+    case UPDATE_DEVICE_DATA: {
+      const {deviceId, data} = payload
+
+      const targetDevice = state[deviceId]
+
+      if(targetDevice) {
+        return {
+          ...state,
+          [deviceId]: {
+            ...targetDevice,
+            data: (targetDevice.data || []).concat(data)
+          }
+        }
+      }
+
+      return state
+    }
 
     default:
       return state

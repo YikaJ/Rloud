@@ -3,7 +3,7 @@
  */
 import { combineReducers } from 'redux'
 
-import deviceList from './device'
+import deviceList from './deviceList'
 import me from './me'
 
 export default combineReducers({

@@ -1,0 +1,39 @@
+@import "./variables";
+
+:global {
+    .device-data-container {
+        .menu {
+            width: 100%;
+            min-height: 600px;
+        }
+    }
+
+
+    .device-data-nav {
+        padding: 16px 5px;
+        background: $green-color;
+
+        %nav-item {
+            color: #f4f4f4;
+            font-size: 16px;
+            padding: 5px 10px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+
+        .dropdown {
+            @extend %nav-item;
+            margin-right: 50px;
+        }
+
+        &>a{
+            @extend %nav-item;
+
+            & span.active {
+                padding: 3px 0;
+                border-bottom: 2px solid #fff;
+                color: #fff;
+            }
+        }
+    }
+}

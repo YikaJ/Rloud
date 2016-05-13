@@ -5,7 +5,6 @@
 var deviceServerConfig = require('../config').deviceServer;
 module.exports = function filter(jsonData) {
   const { type, secret } = jsonData
-
   if(type && secret && secret === deviceServerConfig.secret) {
     return jsonData
   }

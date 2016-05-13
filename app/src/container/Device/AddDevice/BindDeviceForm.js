@@ -20,9 +20,10 @@ class BindDevice extends Component {
 
   componentDidMount() {
     // 开启监听
-    socket.on('bden', (res) => {
-      if(res.ret === 0) {
-        browserHistory.replace(`/app/data/${res.data.deviceId}`)
+    socket.once('bden', (res) => {
+      const {ret, data: {deviceId}} = res
+      if(ret === 0) {
+        browserHistory.replace(`/app/data/${deviceId}`)
       }
     })
   }

@@ -45,7 +45,6 @@ io.on("connection", (socket)=>{
     // 用户鉴权和绑定码对应成功后,需要同时向两端发送 response 告诉已经成功
     session = await reloadSession()
     let sessionDevice = session.bindDevice
-    const deviceId = sessionDevice.deviceId
     if(userId == sessionUser._id && sessionDevice.bindCode == bindCode) {
       // 让设备设为已绑定状态
       await DeviceModel.findOneAndUpdate({userId, _id: deviceId}, {$set: {isBind: true}})
@@ -53,13 +52,13 @@ io.on("connection", (socket)=>{
       // response device
       deviceEvent.event.emit(SEND_TO_DEVICE, {
         ret: 0,
-        data: {userId, deviceId}
+        data: Object.assign({}, sessionDevice, {userId})
       })
 
       //response client
       socket.emit(BIND_DEVICE, {
         ret: 0,
-        data: {deviceId}
+        data: {deviceId: sessionDevice.deviceId}
       })
 
     } else {
@@ -72,10 +71,9 @@ io.on("connection", (socket)=>{
   }
 
   function chartDataCallback(jsonData) {
-    const { userId, data } = jsonData
-
+    const { userId, data, deviceId } = jsonData
     if(userId === sessionUser._id) {
-      socket.emit(CHART_DATA, {ret: 0, data})
+      socket.emit(CHART_DATA, {ret: 0, data:{data, deviceId} })
     }
   }
 

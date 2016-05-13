@@ -1,5 +1,7 @@
 @import "deviceListContainer";
 @import "addDeviceContainer";
+@import "deviceDataContainer";
+@import "dataContent";
 
 :global {
     body {
@@ -16,5 +18,13 @@
 
     .text-right {
         text-align: right;
+    }
+
+
+    // font-face
+    // @icon-url： 字体源文件的地址
+    @font-face {
+        font-family: 'anticon';
+        src: url('./font_1461567603_8950496.woff') format('woff'); /* chrome、firefox */
     }
 }
