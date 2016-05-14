@@ -16,6 +16,7 @@ let events = require('events');
  * clean
  * 清空监听器,手动处理GC
  */
+
 class IOEvent {
   constructor() {
     this.event = new events.EventEmitter();
@@ -43,8 +44,12 @@ class IOEvent {
     this.event.emit(jsonData.type, jsonData)
   }
 
-  clean(eventName) {
-    this.event.removeListener(eventName)
+  clean(fn) {
+    const {CHART_DATA, BIND_DEVICE} = this.eventName
+    const events = [CHART_DATA, BIND_DEVICE]
+    events.forEach((eventName) => {
+      this.event.removeListener(eventName, fn)
+    })
   }
 }
 

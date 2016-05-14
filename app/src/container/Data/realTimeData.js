@@ -14,14 +14,14 @@ class RealTimeData extends Component {
   componentDidMount() {
     const { dispatch } = this.props
     socket.on('cden', ({ret, data}) => {
-      if(ret === 0) {
+      if(ret === 0) {+
         dispatch(updateDeviceData(data.deviceId, data.data))
       }
     })
   }
 
   componentWillUnmount() {
-    socket.removeAllListener('cden')
+    socket.removeAllListeners('cden')
   }
 
   render() {
@@ -38,7 +38,7 @@ class RealTimeData extends Component {
   }
 
   renderDataTable(device) {
-    const {chartOption: {dataItemList, unit}, data} = device
+    const {chartOption: {dataItemList, unit}, data = []} = device
     const newestData = data.slice(-1)[0] || {}
 
     // 根据指标个数分区

@@ -15,20 +15,22 @@ io.on("connection", async (socket)=>{
   const {sessionStore, sessionID} = socket.request
   let session = await reloadSession({sessionID, sessionStore})
 
+  function eventSwitch(jsonData) {
+    switch(jsonData.type) {
+      case BIND_DEVICE:
+        return bindDeviceCallback(jsonData)
+      case CHART_DATA:
+        return chartDataCallback(jsonData)
+    }
+  }
+
   // 如果没有
   if(!session.user){
     socket.emit("err", "no user login");
   }else{
     console.log('New websocket client connected!');
 
-    deviceEvent.listenEvent((jsonData) => {
-      switch(jsonData.type) {
-        case BIND_DEVICE:
-          return bindDeviceCallback(jsonData)
-        case CHART_DATA:
-          return chartDataCallback(jsonData)
-      }
-    });
+    deviceEvent.listenEvent(eventSwitch);
   }
 
   async function bindDeviceCallback(jsonData){
@@ -98,6 +100,7 @@ io.on("connection", async (socket)=>{
   // 当取消连接后,解除ioEvent的监听
   socket.on("disconnect", ()=>{
     console.log("client disconnect");
+    deviceEvent.clean(eventSwitch)
   });
 });
 
