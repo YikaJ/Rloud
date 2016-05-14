@@ -11,9 +11,9 @@ class MyLineChart extends Component {
   render() {
     const {isRealTime, device} = this.props
 
-    const {chartOption: {dataItemList}} = device
+    const {chartOption: {dataItemList}, data = []} = device
     // 只取最新的后十个数据
-    const sliceData = device.data.slice(-10)
+    const sliceData = data.slice(-10)
 
     return (
       <LineChart margin={{top: 30}} width={1000} height={250} data={sliceData}>
@@ -23,7 +23,7 @@ class MyLineChart extends Component {
         <Legend />
         {dataItemList.map((itemName, index) => {
           return (
-            <Line dataKey={itemName || 'data'} key={index} stroke={randomColor(index)} isAnimationActive={!isRealTime} type="monotone" activeDot={{r: 8}}/>
+            <Line dataKey={itemName || 'data'} key={index} stroke={randomColor(index)} strokeWidth="1.5" isAnimationActive={!isRealTime} type="monotone" activeDot={{r: 8}}/>
           )
         })}
       </LineChart>

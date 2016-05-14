@@ -20,6 +20,7 @@ router.post("/createDevice", async function(req, res, next) {
   const userId = req.session.user._id
   const deviceData = req.body
   deviceData.userId = userId
+  deviceData.data = []
 
   // new Device
   const deviceEntity = new DeviceModel(deviceData)

@@ -3,7 +3,7 @@
  */
 
 import React, {Component, PropTypes} from 'react'
-import { Input, Button, Row, Col} from 'antd'
+import { Input, Button, Row, Col, message} from 'antd'
 import {browserHistory} from 'react-router'
 import autobind from 'myUtil/autobind'
 import socket from 'myUtil/socketio'
@@ -20,16 +20,20 @@ class BindDevice extends Component {
 
   componentDidMount() {
     // 开启监听
-    socket.once('bden', (res) => {
-      const {ret, data: {deviceId}} = res
+    socket.on('bden', (res) => {
+      const {ret, data, msg} = res
       if(ret === 0) {
-        browserHistory.replace(`/app/data/${deviceId}`)
+        message.success('成功绑定,请开始采集数据')
+        browserHistory.replace(`/app/data/${data.deviceId}`)
+      } else {
+        message.error(msg)
       }
     })
   }
 
   componentWillUnmount() {
     // Todo 关闭监听
+    socket.removeAllListeners('bden')
   }
 
   render() {

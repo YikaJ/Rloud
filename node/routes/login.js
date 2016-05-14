@@ -27,6 +27,7 @@ function get(req, res, next){
  */
 async function post(req, res, next){
     let data = req.body;
+  
     let session = req.session
     let user = session.user;
     // 如果session不存在user,则重新从数据库获取
