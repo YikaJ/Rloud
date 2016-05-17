@@ -3,7 +3,8 @@
  */
 
 import {
-  CHART_DATA_NAV_TO, UPDATE_DEVICE_DATA, CHANGE_CHART_TYPE,
+  CHART_DATA_NAV_TO, UPDATE_DEVICE_DATA, 
+  CHANGE_HISTORY_CHART_TYPE, CHANGE_REALTIME_CHART_TYPE, CHANGE_DATA_TYPE,
   GET_HISTORY_DATA_REQUEST, GET_HISTORY_DATA_SUCCESS, GET_HISTORY_DATA_FAILURE
 } from 'actionType'
 
@@ -23,10 +24,25 @@ export function updateDeviceData(deviceId, data) {
   }
 }
 
-export function changeChartType(chartType) {
+
+export function changeRealTimeChartType(chartType) {
   return {
-    type: CHANGE_CHART_TYPE,
-    payload: {chartType}
+    type: CHANGE_REALTIME_CHART_TYPE,
+    payload: {realTimeChartType: chartType}
+  }
+}
+
+export function changeHistoryChartType(chartType) {
+  return {
+    type: CHANGE_HISTORY_CHART_TYPE,
+    payload: {historyChartType: chartType}
+  }
+}
+
+export function changeDataType(dataType) {
+  return {
+    type: CHANGE_DATA_TYPE,
+    payload: {dataType}
   }
 }
 

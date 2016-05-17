@@ -42,7 +42,7 @@ class AddDeviceForm extends Component {
         ...values,
         chartOption: {
           dataItemList: this.state.dataItemList,
-          yName: values.yName,
+          yAxisName: values.yAxisName,
           unit: values.unit,
           interval: values.interval
         }
@@ -141,7 +141,7 @@ class AddDeviceForm extends Component {
 
   renderChartOption() {
     const { getFieldProps, getFieldError } = this.props.form;
-    const yNameProps = getFieldProps('yname', {rules: [{required: true, message: '不得为空'}]})
+    const yNameProps = getFieldProps('yAxisName', {rules: [{required: true, message: '不得为空'}]})
     const unitProps = getFieldProps('unit', {rules: [{required: true, message: '不得为空'}]})
     const intervalProps = getFieldProps('interval', {initialValue: 0})
 
@@ -154,8 +154,8 @@ class AddDeviceForm extends Component {
         >
           <InputGroup>
             <Col span="6">
-              <FormItem help={(getFieldError('yname') || []).join(', ')}>
-                <Input {...yNameProps} id="yname" placeholder="描述"/>
+              <FormItem help={(getFieldError('yAxisName') || []).join(', ')}>
+                <Input {...yNameProps} id="yAxisName" placeholder="描述"/>
               </FormItem>
             </Col>
             <Col span="2">
@@ -175,13 +175,6 @@ class AddDeviceForm extends Component {
           help={(getFieldError('dataItemList') || []).join(', ')}
         >
           {this.renderDataItem()}
-        </FormItem>
-
-        <FormItem
-          label="时间间隔："
-          labelCol={labelCol}
-          wrapperCol={wrapperCol} >
-          <InputNumber {...intervalProps} min={0} max={120} defaultValue={0}/>分钟
         </FormItem>
       </div>
     )

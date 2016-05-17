@@ -7,7 +7,7 @@ import {Row, Col, Select} from 'antd'
 import {LineChart, BarChart, AreaChart} from 'component/MyChart'
 import socket from 'myUtil/socketio'
 import autobind from 'myUtil/autobind'
-import {updateDeviceData, changeChartType} from 'action/chartData'
+import {updateDeviceData, changeRealTimeChartType} from 'action/chartData'
 
 class RealTimeData extends Component {
 
@@ -21,7 +21,7 @@ class RealTimeData extends Component {
 
   @autobind
   changeChartType(value) {
-    this.props.dispatch(changeChartType(value))
+    this.props.dispatch(changeRealTimeChartType(value))
   }
 
   componentDidMount() {
@@ -83,7 +83,7 @@ class RealTimeData extends Component {
 
   renderDataChart(device) {
     const {realTimeData} = this.state
-    const {chartType} = this.props
+    const {realTimeChartType} = this.props
     const hasData = realTimeData.length !== 0
 
     const kindOfChart = {
@@ -105,7 +105,7 @@ class RealTimeData extends Component {
 
         <div className="chart">
           {hasData ?
-            kindOfChart[chartType].component
+            kindOfChart[realTimeChartType].component
             : '等待实时数据中...'
           }
         </div>

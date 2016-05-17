@@ -11,14 +11,12 @@ class MyAreaChart extends Component {
   render() {
     const {isRealTime, device, height = 250, data} = this.props
 
-    const {chartOption: {dataItemList}} = device
-    // 只取最新的后十个数据
-    const sliceData = data.slice(-10)
+    const {chartOption: {dataItemList, yAxisName}} = device
 
     return (
-      <AreaChart margin={{top: 30}} width={1000} height={height} data={sliceData}>
+      <AreaChart margin={{ top: 30, right: 30, left: 20, bottom: 5 }} width={1000} height={height} data={data}>
         <XAxis dataKey="xAxisName" label="时间轴" unit="秒"/>
-        <YAxis />
+        <YAxis lable={yAxisName}/>
         <CartesianGrid strokeDasharray="3 3"/>
         <Tooltip />
         <Legend />

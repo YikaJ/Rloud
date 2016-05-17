@@ -15,7 +15,7 @@ module.exports = {
     options: {
       port: "6379",
       host: "127.0.0.1",
-      ttl: 60 * 60 * 2  //Session的有效期为2小时
+      disableTTL: true
     }
   },
   error: {

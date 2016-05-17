@@ -3,12 +3,14 @@
  */
 
 import {
-  CHART_DATA_NAV_TO, CHANGE_CHART_TYPE
+  CHART_DATA_NAV_TO, CHANGE_HISTORY_CHART_TYPE,
+  CHANGE_REALTIME_CHART_TYPE, CHANGE_DATA_TYPE
 } from 'actionType'
 
 const initialState = {
   navKey: "1",
-  chartType: 'line'
+  historyChartType: 'line',
+  realTimeChartType: 'line'
 }
 
 export default function reducer(state = initialState, action) {
@@ -16,15 +18,12 @@ export default function reducer(state = initialState, action) {
 
   switch(type) {
     case CHART_DATA_NAV_TO:
+    case CHANGE_HISTORY_CHART_TYPE:
+    case CHANGE_REALTIME_CHART_TYPE:
+    case CHANGE_DATA_TYPE:
       return {
         ...state,
-        navKey: payload.navKey
-      }
-
-    case CHANGE_CHART_TYPE:
-      return {
-        ...state,
-        chartType: payload.chartType
+        ...payload
       }
     
     default:

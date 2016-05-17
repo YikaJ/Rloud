@@ -47,7 +47,7 @@ export default function reducer(state={}, action) {
         ...state,
         [payload.deviceId]: {
           ...state[payload.deviceId],
-          todayAverage: payload.todayAverage
+          ...payload
         }
       }
 

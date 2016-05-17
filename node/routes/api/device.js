@@ -100,8 +100,7 @@ function getAverage(day) {
 
     // 如果没有传 day 参数,则认为是取当天数据
     if(!day) {
-      const todayData = data.filter(({_time}) => moment(_time).isBefore(today))
-
+      const todayData = data.filter(({_time}) => moment(_time).isAfter(today))
       for(let i = 0; i < 24; i++) {
         let aDate = moment().startOf('day').hours(i)
         let bDate = moment().startOf('day').hours(i + 1)
@@ -110,11 +109,11 @@ function getAverage(day) {
         resultArr.push(data)
       }
     } else {
-      const dayData = data.filter(({_time}) => moment(_time).isBefore(today.subtract(day, 'days')))
+      const dayData = data === 30 ? data : data.filter(({_time}) => moment(_time).isAfter(today.subtract(day, 'days')))
 
       for(let i = 0; i < day; i++) {
-        let aDate = moment().startOf('day').subtract(day + 1, 'days')
-        let bDate = moment().startOf('day').subtract(day, 'days')
+        let aDate = moment().startOf('day').subtract(i + 1, 'days')
+        let bDate = moment().startOf('day').subtract(i, 'days')
 
         const data = dayData.filter(({_time}) => moment(_time).isBetween(aDate, bDate))
         data.length > 0 && resultArr.push(data)
@@ -132,7 +131,8 @@ function getAverage(day) {
           [key]: Math.round(_.mean(dataArr.map(data => data[key])))
         })
       }, {})
-      if(day) {
+
+      if(!day) {
         averageData.xAxisName = `${i}:00`
       } else {
         const day = moment(dataArr[0]._time)

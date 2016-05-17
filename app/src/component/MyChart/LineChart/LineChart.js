@@ -3,7 +3,7 @@
  */
 
 import React, {Component} from 'react'
-import {LineChart, Line, XAxis, YAxis, Tooltip, Legend} from 'recharts'
+import {LineChart, Line, XAxis, YAxis, Tooltip, Legend, CartesianGrid} from 'recharts'
 import {randomColor} from 'myUtil/random'
 
 class MyLineChart extends Component {
@@ -14,14 +14,14 @@ class MyLineChart extends Component {
       type = 'monotone', data = []
     } = this.props
 
-    const {chartOption: {dataItemList}} = device
-    // 只取最新的后十个数据
+    const {chartOption: {dataItemList, yAxisName, unit}} = device
 
     return (
-      <LineChart margin={{ top: 5, right: 30, left: 20, bottom: 5 }} width={1000} height={height} data={data}>
-        <XAxis dataKey="xAxisName" label="时间轴" unit="秒"/>
-        <YAxis />
+      <LineChart margin={{ top: 30, right: 30, left: 20, bottom: 5 }} width={1000} height={height} data={data}>
+        <XAxis dataKey="xAxisName" label="时间"/>
+        <YAxis label={yAxisName} unit={unit}/>
         <Tooltip />
+        <CartesianGrid strokeDasharray="3 3"/>
         <Legend />
         {dataItemList.map((itemName, index) => {
           return (

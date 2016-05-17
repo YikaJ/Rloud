@@ -9,11 +9,13 @@ const deviceDataSelector = state => state.deviceDataContainer
 
 const selector = createSelector(
   entitiesSelector, deviceDataSelector,
-  ({deviceList}, {navKey, chartType}) => {
+  ({deviceList}, {navKey, historyChartType, realTimeChartType, dataType}) => {
     return {
       deviceList,
       navKey,
-      chartType
+      historyChartType,
+      realTimeChartType,
+      dataType
     }
   }
 )
