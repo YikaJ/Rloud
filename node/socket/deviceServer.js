@@ -15,9 +15,14 @@ let server = net.createServer((socket)=>{
 
   // 从 Device 处接收到数据
   socket.on('data', (res)=>{
-    const jsonData = filter(JSON.parse(res.toString()))
+    let jsonData
+    try {
+      jsonData = JSON.parse(res.toString())
+    } catch(err) {
+      return console.error(err)
+    }
     // 只有第一级符合规范的才可以被转发到事件系统中
-    jsonData && deviceEvent.emitEvent(jsonData)
+    filter(jsonData) && deviceEvent.emitEvent(jsonData, socket)
   });
 
   socket.on('end', () => console.log('TCP 连接已断开'))

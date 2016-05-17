@@ -15,9 +15,10 @@ let DeviceSchema = new Schema({
   isBind: Boolean,
   name: {type: String, required: true},
   desc: String,
-  type: {type: String, required: true},
   chartOption: {type: Object, required: true},
-  data: [{type: Object}]
+  data: []
 });
 
-module.exports = mongoose.model('Device', DeviceSchema);
+var DeviceModel = mongoose.model('Device', DeviceSchema);
+
+module.exports = DeviceModel;

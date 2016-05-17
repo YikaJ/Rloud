@@ -89,7 +89,6 @@ class AddDeviceForm extends Component {
     })
 
     const descProps = getFieldProps('desc')
-    const typeProps = getFieldProps('type', {initialValue: '折线图'})
 
     return (
       <Form horizontal form={this.props.form}>
@@ -106,16 +105,6 @@ class AddDeviceForm extends Component {
           labelCol={labelCol} wrapperCol={wrapperCol}
         >
           <Input {...descProps} type="textarea" id="desc" rows="3" placeholder="对设备的描述"/>
-        </FormItem>
-
-        <FormItem
-          id="select" label="图表类型："
-          labelCol={labelCol} wrapperCol={wrapperCol}
-        >
-          <Select {...typeProps} id="type" size="large" defaultValue="1" style={{ width: 200 }}>
-            <Option value="1">折线图</Option>
-            <Option value="2">柱状图</Option>
-          </Select>
         </FormItem>
 
         {this.renderChartOption()}

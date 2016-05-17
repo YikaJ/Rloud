@@ -10,11 +10,11 @@ const bindDevice = {
   secret, token,
   type: bindDeviceType,
   user: {
-    email: 'jimklose@ff.com',
+    email: 'jimklose@icloud.com',
     password: '5710569'
   },
   device: {
-    bindCode: 'io7cloit'
+    bindCode: 'ioa42wam'
   }
 }
 

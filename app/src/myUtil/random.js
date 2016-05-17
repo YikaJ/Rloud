@@ -3,7 +3,7 @@
  */
 import range from './range'
 
-const colors = ["#0c9", "#03f", "#c00", "#960", "#0ff", "#c09", "#cf0", "#f6f", "#c3f", "#9ff", "#990", "#666"]
+const colors = ["#0c9", "#8884d8", "#c00", "#960", "#0ff", "#c09", "#cf0", "#f6f", "#c3f", "#9ff", "#990", "#666"]
 
 export function randomColor(index) {
   if(index || index === 0) {

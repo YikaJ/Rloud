@@ -41,4 +41,6 @@ UserSchema.method("someMethod", ()=>{
   // your codes...
 });
 
-module.exports = mongoose.model('User', UserSchema);
+var UserModel = mongoose.model('User', UserSchema);
+
+module.exports = UserModel;

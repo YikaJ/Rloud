@@ -9,21 +9,23 @@ import {randomColor} from 'myUtil/random'
 class MyLineChart extends Component {
 
   render() {
-    const {isRealTime, device} = this.props
+    const {
+      isRealTime, device, height = 250,
+      type = 'monotone', data = []
+    } = this.props
 
-    const {chartOption: {dataItemList}, data = []} = device
+    const {chartOption: {dataItemList}} = device
     // 只取最新的后十个数据
-    const sliceData = data.slice(-10)
 
     return (
-      <LineChart margin={{top: 30}} width={1000} height={250} data={sliceData}>
+      <LineChart margin={{ top: 5, right: 30, left: 20, bottom: 5 }} width={1000} height={height} data={data}>
         <XAxis dataKey="xAxisName" label="时间轴" unit="秒"/>
         <YAxis />
         <Tooltip />
         <Legend />
         {dataItemList.map((itemName, index) => {
           return (
-            <Line dataKey={itemName || 'data'} key={index} stroke={randomColor(index)} strokeWidth="1.5" isAnimationActive={!isRealTime} type="monotone" activeDot={{r: 8}}/>
+            <Line dataKey={itemName || 'data'} key={index} stroke={randomColor(index)} strokeWidth="1.2" isAnimationActive={!isRealTime} type={type} activeDot={{r: 8}}/>
           )
         })}
       </LineChart>

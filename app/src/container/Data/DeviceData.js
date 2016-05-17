@@ -7,7 +7,8 @@ import { Menu, Icon, Row, Col } from 'antd';
 import { navTo } from 'action/chartData'
 import autobind from 'myUtil/autobind'
 const {SubMenu} = Menu
-import RealTimeData from './RealTimeData'
+
+import {RealTimeData, HistoryTendency} from './DataContent'
 
 class DeviceData extends Component {
 
@@ -18,7 +19,7 @@ class DeviceData extends Component {
   }
 
   render() {
-    const {deviceId, navKey, deviceList} = this.props
+    const {deviceId, deviceList} = this.props
     const device = deviceList[deviceId]
     return (
       <Row>
@@ -26,17 +27,18 @@ class DeviceData extends Component {
           {this.renderMenu(deviceId)}
         </Col>
         <Col span="20">
-          {this.renderContent({navKey, device, deviceList})}
+          {this.renderContent(device)}
         </Col>
       </Row>
     )
   }
 
-  renderContent({navKey, device, deviceList}) {
-    const {dispatch} = this.props
-    switch (navKey) {
+  renderContent(device) {
+    switch (this.props.navKey) {
       case '1':
-        return <RealTimeData deviceList={deviceList} device={device} dispatch={dispatch}/>
+        return <RealTimeData {...this.props} device={device}/>
+      case '2':
+        return <HistoryTendency {...this.props} device={device}/>
     }
   }
 

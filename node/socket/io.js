@@ -3,11 +3,12 @@
  * 将设备服务器的数据处理后,通过 websocket(socket.io) 传输到客户端
  */
 'use strict';
+const _ = require('lodash');
 let io = require('socket.io')();
 let deviceEvent = require('./deviceEvent');
 const UserModel = require('../models/UserModel');
 const DeviceModel = require('../models/DeviceModel');
-const { BIND_DEVICE, CHART_DATA, SEND_TO_DEVICE } = deviceEvent.eventName
+const { BIND_DEVICE, CHART_DATA } = deviceEvent.eventName
 
 require('./deviceServer')();
 
@@ -51,7 +52,7 @@ io.on("connection", async (socket)=>{
     if(userId == sessionUser._id && sessionDevice.bindCode == bindCode) {
       // 让设备设为已绑定状态
       try {
-        await DeviceModel.findOneAndUpdate({userId, _id: sessionDevice.deviceId}, {$set: {isBind: true}})
+        await DeviceModel.findOneAndUpdate({_id: sessionDevice.deviceId}, {$set: {isBind: true}})
       } catch (err) {
         return socket.emit(BIND_DEVICE, {
           ret: 2,
@@ -77,9 +78,19 @@ io.on("connection", async (socket)=>{
 
   }
 
-  function chartDataCallback(jsonData) {
-    const { userId, data, deviceId } = jsonData
+  async function chartDataCallback(jsonData) {
+    const { userId, data, deviceId, type } = jsonData
     if(userId === socket.request.session.user._id) {
+      try {
+        const device = await DeviceModel.findOne({_id: deviceId})
+        const deviceData = device.data
+          // 一分钟才记录一个数据
+        if(deviceData.length === 0 || data._time - (_.last(deviceData)._time) > (1000 * 60)) {
+          await DeviceModel.findOneAndUpdate({_id: deviceId}, {$push: {data}})
+        }
+      } catch (err) {
+        return console.error(err)
+      }
       socket.emit(CHART_DATA, {ret: 0, data:{data, deviceId} })
     }
   }

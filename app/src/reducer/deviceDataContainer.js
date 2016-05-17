@@ -3,11 +3,12 @@
  */
 
 import {
-  CHART_DATA_NAV_TO
+  CHART_DATA_NAV_TO, CHANGE_CHART_TYPE
 } from 'actionType'
 
 const initialState = {
-  navKey: "1"
+  navKey: "1",
+  chartType: 'line'
 }
 
 export default function reducer(state = initialState, action) {
@@ -17,7 +18,13 @@ export default function reducer(state = initialState, action) {
     case CHART_DATA_NAV_TO:
       return {
         ...state,
-        ...payload
+        navKey: payload.navKey
+      }
+
+    case CHANGE_CHART_TYPE:
+      return {
+        ...state,
+        chartType: payload.chartType
       }
     
     default:

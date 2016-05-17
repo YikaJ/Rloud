@@ -11,15 +11,6 @@ class DeviceNav extends Component {
   render() {
     const {deviceList, deviceId, location: {query}} = this.props
     const currentDevice = deviceList[deviceId] || {}
-    
-    let dataClassName = ' pull-left '
-    let manageClassName = ' pull-left '
-
-    if(query.manage) {
-      manageClassName += 'active'
-    } else {
-      dataClassName += 'active'
-    }
 
     return (
       <nav className="clearfix device-data-nav">

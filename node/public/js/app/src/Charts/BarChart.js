@@ -10,7 +10,7 @@ let ec = require('echarts');
 //let theme = require('echarts/theme/mint');
 let options = require('./BarChartOptions');
 
-let BarChart = React.createClass({
+let MyBarChart = React.createClass({
 
   componentDidMount(){
     // echarts的配置
@@ -51,4 +51,4 @@ let BarChart = React.createClass({
   }
 });
 
-module.exports = BarChart;
+module.exports = MyBarChart;

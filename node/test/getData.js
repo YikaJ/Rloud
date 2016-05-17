@@ -24,15 +24,14 @@ function getChartData() {
     secret, token,
     type: chartDataType,
     userId: "5730c3cfb5625b08701c6b76",
-    deviceId: '57344a7c11d806e6833019bd',
-    data: [
-      {
-        xAxisName: `${date.h}:${date.m}:${date.s}`,
-        "室内": parseInt(15 + 30 * Math.random()),
-        "室外": parseInt(15 + 30 * Math.random()),
-        "A实验室": parseInt(15 + 30 * Math.random())
-      }
-    ]
+    deviceId: '5739da5b386dfbcf10ff1da1',
+    data: {
+      _time: Date.now(),
+      xAxisName: `${date.h}:${date.m}:${date.s}`,
+      "室内": parseInt(15 + 30 * Math.random()),
+      "室外": parseInt(15 + 30 * Math.random()),
+      "A实验室": parseInt(15 + 30 * Math.random())
+    }
   }
 }
 

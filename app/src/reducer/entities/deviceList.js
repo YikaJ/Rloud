@@ -4,7 +4,7 @@
 
 import {
   ADD_DEVICE_SUCCESS, GET_DEVICE_SUCCESS,
-  UPDATE_DEVICE_DATA
+  UPDATE_DEVICE_DATA, GET_HISTORY_DATA_SUCCESS
 } from 'actionType'
 
 export default function reducer(state={}, action) {
@@ -34,13 +34,22 @@ export default function reducer(state={}, action) {
           ...state,
           [deviceId]: {
             ...targetDevice,
-            data: (targetDevice.data || []).concat(data)
+            data: (targetDevice.data).concat(data)
           }
         }
       }
 
       return state
     }
+
+    case GET_HISTORY_DATA_SUCCESS:
+      return {
+        ...state,
+        [payload.deviceId]: {
+          ...state[payload.deviceId],
+          todayAverage: payload.todayAverage
+        }
+      }
 
     default:
       return state
