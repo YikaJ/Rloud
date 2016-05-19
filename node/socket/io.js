@@ -41,7 +41,7 @@ io.on("connection", async (socket)=>{
       const dbUser = await UserModel.findOne(user)
       userId = dbUser._id
     } catch(err) {
-      return console.error(err)
+      return console.error("io.js Error:", err)
     }
 
 
@@ -53,18 +53,18 @@ io.on("connection", async (socket)=>{
       // 让设备设为已绑定状态
       try {
         await DeviceModel.findOneAndUpdate({_id: sessionDevice.deviceId}, {$set: {isBind: true}})
+        //response client
+        socket.emit(BIND_DEVICE, {
+          ret: 0,
+          data: {deviceId: sessionDevice.deviceId}
+        })
       } catch (err) {
+        console.error('io.js Error:', err)
         return socket.emit(BIND_DEVICE, {
           ret: 2,
           msg: '绑定失败,请重试...' + err
         })
       }
-
-      //response client
-      socket.emit(BIND_DEVICE, {
-        ret: 0,
-        data: {deviceId: sessionDevice.deviceId}
-      })
 
     } else {
       let msg = sessionDevice.bindCode == bindCode ?
@@ -88,10 +88,10 @@ io.on("connection", async (socket)=>{
         if(deviceData.length === 0 || data._time - (_.last(deviceData)._time) > (1000 * 60)) {
           await DeviceModel.findOneAndUpdate({_id: deviceId}, {$push: {data}})
         }
+        socket.emit(CHART_DATA, {ret: 0, data:{data, deviceId} })
       } catch (err) {
-        return console.error(err)
+        return console.error('io.js Error: ', err)
       }
-      socket.emit(CHART_DATA, {ret: 0, data:{data, deviceId} })
     }
   }
 

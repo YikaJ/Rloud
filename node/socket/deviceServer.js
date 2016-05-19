@@ -19,7 +19,7 @@ let server = net.createServer((socket)=>{
     try {
       jsonData = JSON.parse(res.toString())
     } catch(err) {
-      return console.error(err)
+      return console.error("deviceServer.js Error:", err)
     }
     // 只有第一级符合规范的才可以被转发到事件系统中
     filter(jsonData) && deviceEvent.emitEvent(jsonData, socket)
