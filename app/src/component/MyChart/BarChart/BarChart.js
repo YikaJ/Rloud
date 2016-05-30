@@ -3,7 +3,7 @@
  */
 
 import React, {Component} from 'react'
-import {BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid} from 'recharts'
+import {BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid, ReferenceLine} from 'recharts'
 import {randomColor} from 'myUtil/random'
 
 class MyBarChart extends Component {
@@ -18,6 +18,8 @@ class MyBarChart extends Component {
         <XAxis dataKey="xAxisName" label="时间轴" unit="秒"/>
         <YAxis label={yAxisName}/>
         <CartesianGrid strokeDasharray="3 3"/>
+        <ReferenceLine y={70} label="最大值" stroke="red" strokeDasharray="3 3" alwaysShow/>
+        <ReferenceLine y={30} label="最小值" stroke="red" strokeDasharray="3 3" alwaysShow/>
         <Tooltip />
         <Legend />
         {dataItemList.map((itemName, index) => {

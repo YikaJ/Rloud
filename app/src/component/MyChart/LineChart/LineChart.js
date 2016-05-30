@@ -3,7 +3,7 @@
  */
 
 import React, {Component} from 'react'
-import {LineChart, Line, XAxis, YAxis, Tooltip, Legend, CartesianGrid} from 'recharts'
+import {LineChart, Line, XAxis, YAxis, Tooltip, Legend, CartesianGrid, ReferenceLine} from 'recharts'
 import {randomColor} from 'myUtil/random'
 
 class MyLineChart extends Component {
@@ -21,6 +21,8 @@ class MyLineChart extends Component {
         <XAxis dataKey="xAxisName" label="时间"/>
         <YAxis label={yAxisName} unit={unit}/>
         <Tooltip />
+        <ReferenceLine y={70} label="最大值" stroke="red" strokeDasharray="3 3" alwaysShow/>
+        <ReferenceLine y={30} label="最小值" stroke="red" strokeDasharray="3 3" alwaysShow/>
         <CartesianGrid strokeDasharray="3 3"/>
         <Legend />
         {dataItemList.map((itemName, index) => {

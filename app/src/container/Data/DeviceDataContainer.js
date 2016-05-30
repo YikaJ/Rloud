@@ -6,8 +6,10 @@ import React, {Component, PropTypes} from 'react'
 import DeviceNav from './DeviceNav'
 import DeviceData from './DeviceData'
 import selector from 'selector/deviceData'
+import {getHistoryData} from 'action/chartData'
 
 class DeviceDataContainer extends Component {
+
   render() {
     const {params: {deviceId}, location: {query}} = this.props
     return (

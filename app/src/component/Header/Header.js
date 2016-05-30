@@ -6,6 +6,8 @@ import React, {Component, PropTypes} from 'react'
 import CSSModules from 'react-css-modules';
 import styles from './Header.scss'
 
+import {Link} from 'react-router'
+
 @CSSModules(styles)
 class Header extends Component {
   render() {
@@ -17,7 +19,7 @@ class Header extends Component {
             <a href="/" styleName="logo">Rloud</a>
           </div>
           <div className="pull-right">
-            <a href="/app" styleName="username">{me.username || '游客'}</a>
+            <Link to="/app" styleName="username">{me.username || '游客'}</Link>
             <a href="/logout" styleName="logout-btn">登出</a>
           </div>
         </div>

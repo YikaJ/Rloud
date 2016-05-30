@@ -76,12 +76,9 @@ router.post("/getHistoryData", async function(req, res) {
   let device
   try {
     device = await DeviceModel.findOne({_id: deviceId})
-    const filterData = device.data.filter(({_time}) => _time >= moment().startOf('day').subtract(30, 'days'))
 
-    const todayAverage = getAverage()(device, filterData)
-    const _7Average = getAverage(7)(device, filterData)
-    const _14Average = getAverage(14)(device, filterData)
-    const _30Average = getAverage(30)(device, filterData)
+    // Todo:将五次循环减到一次,从后到前
+    const {todayAverage,_7Average,_14Average,_30Average} = getAverage(device)
 
     res.json({
       ret: 0,
@@ -93,54 +90,63 @@ router.post("/getHistoryData", async function(req, res) {
   }
 })
 
-function getAverage(day) {
-  return function(device, data) {
-    const today = moment().startOf('day')
-    let resultArr = []
+function getAverage(device) {
+  const today = moment().startOf('day')
+  const _30day = moment().startOf('day').subtract(30, 'days')
+  let todayResult = _.range(24).map(i => [])
+  let prevResult = _.range(30).map(i => [])
 
-    // 如果没有传 day 参数,则认为是取当天数据
-    if(!day) {
-      const todayData = data.filter(({_time}) => moment(_time).isAfter(today))
-      for(let i = 0; i < 24; i++) {
-        let aDate = moment().startOf('day').hours(i)
-        let bDate = moment().startOf('day').hours(i + 1)
+  const {data, chartOption: {dataItemList}} = device
+  let i = data.length - 1
 
-        const data = todayData.filter(({_time}) => moment(_time).isBetween(aDate, bDate))
-        resultArr.push(data)
-      }
-    } else {
-      const dayData = data === 30 ? data : data.filter(({_time}) => moment(_time).isAfter(today.subtract(day, 'days')))
+  // 数据入组
+  while(i) {
+    if(i === 0) break;
+    const currentData = data[i]
+    let dataTime = moment(currentData._time)
 
-      for(let i = 0; i < day; i++) {
-        let aDate = moment().startOf('day').subtract(i + 1, 'days')
-        let bDate = moment().startOf('day').subtract(i, 'days')
-
-        const data = dayData.filter(({_time}) => moment(_time).isBetween(aDate, bDate))
-        data.length > 0 && resultArr.push(data)
-      }
+    if(dataTime.isBefore(_30day)) break;
+    if(dataTime.isAfter(today)) {
+      todayResult[dataTime.hour()].push(currentData)
+    }else {
+      dataTime = dataTime.startOf('day')
+      const diffDay = today.diff(dataTime, 'days')
+      prevResult[diffDay].push(currentData)
     }
+    i--
+  }
 
-    return resultArr.map((dataArr, i) => {
-      // 今天某个时间点没数据,就只显示轴
-      if(!day && dataArr.length <= 0) return {xAxisName: `${i}:00`}
-
-      // 根据数据选项求平均值
-      const {dataItemList} = device.chartOption
-      const averageData = dataItemList.reduce((obj, key) => {
+  //数据求均值
+  let todayAverage = [], _30Average = []
+  dataItemList.forEach((key)=>{
+    todayAverage = todayResult.map((hourDataArr, index)=>{
+      let result =  hourDataArr.reduce((obj) => {
         return Object.assign({}, obj, {
-          [key]: Math.round(_.mean(dataArr.map(data => data[key])))
+          [key]: Math.round(_.mean(hourDataArr.map(data => data[key])))
         })
-      }, {})
-
-      if(!day) {
-        averageData.xAxisName = `${i}:00`
-      } else {
-        const day = moment(dataArr[0]._time)
-        averageData.xAxisName = day.format("M.D")
-      }
-
-      return averageData
+      }, todayAverage[index] || {})
+      result.xAxisName = `${index}: 00`
+      return result
     })
+
+    _30Average = prevResult.map((dayDataArr, index) => {
+      let result = dayDataArr.reduce((obj) => {
+        return Object.assign({}, obj, {
+          [key]: Math.round(_.mean(dayDataArr.map(data => data[key])))
+        })
+      }, _30Average[index] || {})
+      result.xAxisName = moment().subtract(index, 'days').format('M.D')
+      return result
+    })
+  })
+
+  _30Average.reverse()
+
+  return {
+    todayAverage,
+    _7Average: _30Average.slice(-7),
+    _14Average: _30Average.slice(-14),
+    _30Average
   }
 }
 

@@ -55,8 +55,23 @@ class BindDevice extends Component {
         <div className="intro">
           <h2 className="text-center title">使用指南</h2>
           <ol>
-            <li>插入传感器,并打开树莓派</li>
-            <li>使用脚本,并在提示输入绑定码时,输入该绑定码</li>
+            <li>让硬件设备通过 Socket 以下面的格式进行绑定传输。</li>
+            <li>通过该格式进行传输可以得到正确解析,并绑定设备。
+              <pre className="code-block">{`
+// JSON数据格式,地址是: http://localhost:3334
+{
+  "type": "bden",
+  "user": {
+    "email": "xxx@xxx.com",
+    "password": "xxxxxx"
+  },
+  "device": {
+    "bindCode": "xxxxxx"
+  }
+}
+`}
+              </pre>
+            </li>
           </ol>
         </div>
       </div>

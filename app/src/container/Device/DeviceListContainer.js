@@ -16,6 +16,11 @@ class DeviceList extends Component {
     dispatch(startToBind(deviceId))
   }
 
+  delDevice(event) {
+    event.stopPropagation()
+    console.log(event.target.getAttribute('data-deviceid'))
+  }
+
   render() {
     const {deviceList} = this.props
 
@@ -50,7 +55,8 @@ class DeviceList extends Component {
         <Link to={`/app/data/${deviceId}`}>
           <h3 className="device-name">{name}</h3>
           <div>{desc}</div>
-          <div>昨日平均值: 25</div>
+          <div>昨日平均值: 56</div>
+          <span className="device-del" data-deviceid={deviceId} onClick={this.delDevice}>删除</span>
         </Link>
       </li>
     )
@@ -62,6 +68,7 @@ class DeviceList extends Component {
         <Link to="/app/add" onClick={() => this.startBind(deviceId)}>
           <h3 className="device-name">{name}</h3>
           <div>{desc}</div>
+          <span className="device-del" data-deviceid={deviceId} onClick={this.delDevice}>删除</span>
         </Link>
       </li>
     )

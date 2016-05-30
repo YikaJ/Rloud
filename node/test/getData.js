@@ -24,13 +24,13 @@ function getChartData() {
     secret, token,
     type: chartDataType,
     userId: "5730c3cfb5625b08701c6b76",
-    deviceId: '5739da5b386dfbcf10ff1da1',
+    deviceId: '574334c72274a69b1a4f75a9',
     data: {
       _time: Date.now(),
       xAxisName: `${date.h}:${date.m}:${date.s}`,
-      "室内": parseInt(15 + 30 * Math.random()),
-      "室外": parseInt(15 + 30 * Math.random()),
-      "A实验室": parseInt(15 + 30 * Math.random())
+      "室内": parseInt(40 + 20 * Math.random()),
+      "室外": parseInt(40 + 20 * Math.random()),
+      "A实验室": parseInt(40 + 20 * Math.random())
     }
   }
 }
@@ -40,7 +40,7 @@ const client = net.connect({port: 3334}, ()=>{
   console.log("客户端: TCP 连接成功");
   setInterval(() => {
     client.write(JSON.stringify(getChartData()));
-  }, 1000)
+  }, 2000)
 });
 
 client.on('data', json => {

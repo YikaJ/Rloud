@@ -130,7 +130,11 @@ class AddDeviceForm extends Component {
       <ul>
         {dataItemList.map((value, i) => (
           <li className="data-item clearfix" key={i}>
-            <Input placeholder="数据项名称" value={value} className="pull-left data-item-name" onChange={(e)=>this.handleDataItemChange(e.target.value, i)}/>
+            <div className="pull-left data-item-name">
+              <Input placeholder="数据项名称" value={value} onChange={(e)=>this.handleDataItemChange(e.target.value, i)}/>
+              <Input className="data-item-limit" placeholder="异常最小值"/>&emsp;
+              <Input className="data-item-limit" placeholder="异常最大值"/>
+            </div>
             <a onClick={this.addDataItem} href="javascript:" className="pull-left data-item-add">增加</a>
             <a onClick={()=>this.removeDataItem(i)} href="javascript:" className={delClassName}>删除</a>
           </li>
@@ -143,17 +147,16 @@ class AddDeviceForm extends Component {
     const { getFieldProps, getFieldError } = this.props.form;
     const yNameProps = getFieldProps('yAxisName', {rules: [{required: true, message: '不得为空'}]})
     const unitProps = getFieldProps('unit', {rules: [{required: true, message: '不得为空'}]})
-    const intervalProps = getFieldProps('interval', {initialValue: 0})
 
     return (
       <div>
         <h3 className="text-center">图表选项</h3><br/>
         <FormItem
-          label="Y轴：" labelCol={labelCol}
+          label="数据描述：" labelCol={labelCol}
           help wrapperCol={wrapperCol}
         >
           <InputGroup>
-            <Col span="6">
+            <Col span="12">
               <FormItem help={(getFieldError('yAxisName') || []).join(', ')}>
                 <Input {...yNameProps} id="yAxisName" placeholder="描述"/>
               </FormItem>

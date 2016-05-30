@@ -22,7 +22,7 @@ let server = net.createServer((socket)=>{
       return console.error("deviceServer.js Error:", err)
     }
     // 只有第一级符合规范的才可以被转发到事件系统中
-    filter(jsonData) && deviceEvent.emitEvent(jsonData, socket)
+    return filter(jsonData) && deviceEvent.emitEvent(jsonData, socket)
   });
 
   socket.on('end', () => console.log('TCP 连接已断开'))
