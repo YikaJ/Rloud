@@ -67,11 +67,11 @@ class RealTimeData extends Component {
       <div className="data-table">
         <h3>数据指标</h3>
         <Row>
-          {dataItemList.map((itemName, i) => {
-            const dataNum = newestData[itemName] || '等待...'
+          {dataItemList.map(({name}, i) => {
+            const dataNum = newestData[name] || '等待...'
             return (
               <Col className="text-center data-col" key={i} span={span}>
-                <h4>{itemName}</h4>
+                <h4>{name}</h4>
                 <div><span className="data">{dataNum}</span>  / {unit}</div>
               </Col>
             )

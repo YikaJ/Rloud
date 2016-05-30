@@ -7,8 +7,11 @@ import {
   ADD_DEVICE_REQUEST, ADD_DEVICE_SUCCESS, ADD_DEVICE_FAILURE,
   GET_DEVICE_REQUEST, GET_DEVICE_SUCCESS, GET_DEVICE_FAILURE,
   POST_BIND_CODE_REQUEST, POST_BIND_CODE_SUCCESS, POST_BIND_CODE_FAILURE,
-  CLEAR_DEVICE_FORM, START_TO_BIND_DEVICE, UPDATE_DEVICE_DATA
+  CLEAR_DEVICE_FORM, START_TO_BIND_DEVICE,
+  DEL_DEVICE_REQUEST, DEL_DEVICE_SUCCESS, DEL_DEVICE_FAILURE,
+  EDIT_DEVICE_REQUEST,  EDIT_DEVICE_SUCCESS, EDIT_DEVICE_FAILURE
 } from 'actionType'
+import {message} from 'antd'
 
 // 获取设备列表
 export function getDevice(payload) {
@@ -32,6 +35,41 @@ export function registerDevice(payload) {
       method: 'POST',
       payload: {
         ...payload
+      }
+    }
+  }
+}
+
+export function editDevice(payload) {
+  return {
+    [CALL_API]: {
+      types: [EDIT_DEVICE_REQUEST,  EDIT_DEVICE_SUCCESS, EDIT_DEVICE_FAILURE],
+      request: '/api/editDevice',
+      method: 'POST',
+      payload: {
+        ...payload
+      },
+      success: ()=>{
+        message.success('修改设备信息成功')
+      }
+    }
+  }
+}
+
+export function delDevice(deviceId) {
+  return {
+    [CALL_API]: {
+      types: [DEL_DEVICE_REQUEST, DEL_DEVICE_SUCCESS, DEL_DEVICE_FAILURE],
+      request: '/api/delDevice',
+      method: 'POST',
+      payload: {
+        deviceId
+      },
+      success: function() {
+        message.success('删除设备成功')
+      },
+      error: function() {
+        message.error('删除设备失败,请稍后重试')
       }
     }
   }

@@ -18,13 +18,21 @@ class MyBarChart extends Component {
         <XAxis dataKey="xAxisName" label="时间轴" unit="秒"/>
         <YAxis label={yAxisName}/>
         <CartesianGrid strokeDasharray="3 3"/>
-        <ReferenceLine y={70} label="最大值" stroke="red" strokeDasharray="3 3" alwaysShow/>
-        <ReferenceLine y={30} label="最小值" stroke="red" strokeDasharray="3 3" alwaysShow/>
+        {dataItemList.map(({min}, index) => {
+          return (
+            min ? <ReferenceLine y={+min} label="最小值" stroke={randomColor(index)} strokeDasharray="20,10,5,5,5,10" alwaysShow/> : ''
+          )
+        })}
+        {dataItemList.map(({max}, index) => {
+          return (
+            max ? <ReferenceLine y={+max} label="最大值" stroke={randomColor(index)} strokeDasharray="20,10,5,5,5,10" alwaysShow/> : ''
+          )
+        })}
         <Tooltip />
         <Legend />
-        {dataItemList.map((itemName, index) => {
+        {dataItemList.map(({name}, index) => {
           return (
-            <Bar dataKey={itemName || 'data'} key={index} fill={randomColor(index)} strokeWidth="1.5" isAnimationActive={!isRealTime} type="monotone" activeDot={{r: 8}}/>
+            <Bar dataKey={name || 'data'} key={index} fill={randomColor(index)} strokeWidth="1.5" isAnimationActive={!isRealTime} type="monotone" activeDot={{r: 8}}/>
           )
         })}
       </BarChart>

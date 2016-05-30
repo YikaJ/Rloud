@@ -6,8 +6,9 @@ import React, {Component, PropTypes} from 'react'
 import selector from 'selector/deviceList'
 import {Link} from 'react-router'
 import {Icon} from 'antd'
+import autobind from 'myUtil/autobind'
 
-import {startToBind} from 'action/device'
+import {startToBind, delDevice} from 'action/device'
 
 class DeviceList extends Component {
 
@@ -16,9 +17,13 @@ class DeviceList extends Component {
     dispatch(startToBind(deviceId))
   }
 
+  @autobind
   delDevice(event) {
+    const {dispatch} = this.props
     event.stopPropagation()
-    console.log(event.target.getAttribute('data-deviceid'))
+    event.preventDefault()
+    const deviceId = event.target.getAttribute('data-deviceid')
+    dispatch(delDevice(deviceId))
   }
 
   render() {
@@ -55,7 +60,6 @@ class DeviceList extends Component {
         <Link to={`/app/data/${deviceId}`}>
           <h3 className="device-name">{name}</h3>
           <div>{desc}</div>
-          <div>昨日平均值: 56</div>
           <span className="device-del" data-deviceid={deviceId} onClick={this.delDevice}>删除</span>
         </Link>
       </li>

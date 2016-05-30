@@ -56,6 +56,41 @@ router.post("/createDevice", async function(req, res, next) {
 
 });
 
+router.post("/editDevice", async function(req, res, next) {
+  const deviceData = req.body
+  const deviceId = deviceData.deviceId
+
+  try {
+    await DeviceModel.findOneAndUpdate(deviceId, {$set: deviceData})
+
+    res.json({
+      ret: 0,
+      msg: '设备信息修改成功'
+    })
+  } catch (err) {
+    console.error('错误,无法生成设备数据:', err.message)
+    res.json({
+      ret: 2,
+      msg: err.message
+    })
+  }
+
+});
+
+router.post("/delDevice", async function(req, res) {
+  const deviceId = req.body['deviceId']
+  try{
+    await DeviceModel.findOneAndRemove(deviceId)
+    return res.json({
+      ret: 0,
+      msg: '删除设备成功'
+    })
+  } catch(err) {
+    console.error(err)
+    return res.json({ret: -1, msg: err.message})
+  }
+})
+
 router.post("/getBindCode", function(req, res, next) {
   const bindCode = (Date.now() + parseInt(1000 * Math.random())).toString(36)
   const deviceId = req.body['deviceId']
@@ -118,14 +153,14 @@ function getAverage(device) {
 
   //数据求均值
   let todayAverage = [], _30Average = []
-  dataItemList.forEach((key)=>{
+  dataItemList.forEach(({name})=>{
     todayAverage = todayResult.map((hourDataArr, index)=>{
       let result =  hourDataArr.reduce((obj) => {
         return Object.assign({}, obj, {
-          [key]: Math.round(_.mean(hourDataArr.map(data => data[key])))
+          [name]: Math.round(_.mean(hourDataArr.map(data => data[name])))
         })
       }, todayAverage[index] || {})
-      result.xAxisName = `${index}: 00`
+      result.xAxisName = `${index < 10 ? '0' + index : index}: 00`
       return result
     })
 

@@ -4,7 +4,8 @@
 
 import {
   ADD_DEVICE_SUCCESS, GET_DEVICE_SUCCESS,
-  UPDATE_DEVICE_DATA, GET_HISTORY_DATA_SUCCESS
+  UPDATE_DEVICE_DATA, GET_HISTORY_DATA_SUCCESS,
+  DEL_DEVICE_SUCCESS, EDIT_DEVICE_SUCCESS
 } from 'actionType'
 
 export default function reducer(state={}, action) {
@@ -23,7 +24,23 @@ export default function reducer(state={}, action) {
         ...state,
         [payload.deviceId]: payload
       }
-    
+
+    case EDIT_DEVICE_SUCCESS:
+      return {
+        ...state,
+        [payload.deviceId]: {
+          ...state[payload.deviceId],
+          ...payload
+        }
+      }
+
+    case DEL_DEVICE_SUCCESS: {
+      const {deviceId} = payload
+      const newDeviceList = {...state}
+      delete newDeviceList[deviceId]
+      return newDeviceList
+    }
+
     case UPDATE_DEVICE_DATA: {
       const {deviceId, data} = payload
 

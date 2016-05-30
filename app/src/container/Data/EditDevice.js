@@ -5,10 +5,8 @@
 import React, {Component, PropTypes} from 'react'
 import classnames from 'classnames'
 import autobind from 'myUtil/autobind'
-import {connect} from 'react-redux'
 
-import {registerDevice} from 'action/device'
-import selector from 'selector/addDevice'
+import {editDevice} from 'action/device'
 
 import { Form, Input, Select, Button, InputNumber, Row, Col } from 'antd';
 const createForm = Form.create;
@@ -18,19 +16,26 @@ const InputGroup = Input.Group;
 const labelCol = {span: 6}
 const wrapperCol = {span: 14, offset: 1}
 
-class AddDeviceForm extends Component {
+class EditDeviceForm extends Component {
 
   constructor(props){
-  	super(props)
-
+    super(props)
     this.state = {
-      dataItemList: [{}]
+      dataItemList: (props.device && props.device.chartOption.dataItemList) || [{}]
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps.device !== this.props.device) {
+      this.setState({
+        dataItemList: nextProps.device.chartOption.dataItemList
+      })
     }
   }
 
   @autobind
   handlerSubmit(e) {
-    const {dispatch, form} = this.props
+    const {dispatch, form, device} = this.props
     e.preventDefault();
 
     form.validateFields((errors, values) => {
@@ -38,7 +43,8 @@ class AddDeviceForm extends Component {
         console.log('Errors in form!!!');
         return;
       }
-      dispatch(registerDevice({
+      dispatch(editDevice({
+        deviceId: device._id,
         ...values,
         chartOption: {
           dataItemList: this.state.dataItemList,
@@ -79,41 +85,46 @@ class AddDeviceForm extends Component {
   }
 
   render() {
-    const { getFieldProps, getFieldError } = this.props.form;
-
+    const { getFieldProps, getFieldError } = this.props.form
+    const {device = {}} = this.props
+    const {name, desc} = device
     const nameProps = getFieldProps('name', {
+      initialValue: name,
       rules: [
         { required: true, message: '设备名不得为空' },
         { max: 10, message: '设备名不大于10个字符' }
       ]
     })
-
-    const descProps = getFieldProps('desc')
+    const descProps = getFieldProps('desc', {
+      initialValue: desc
+    })
 
     return (
-      <Form horizontal form={this.props.form}>
-        <FormItem
-          id="control-input" label="设备名：" hasFeedback
-          labelCol={labelCol} wrapperCol={wrapperCol}
-          help={(getFieldError('name') || []).join(', ')}
-        >
-          <Input {...nameProps} id="name" placeholder="设备名不大于10个字" />
-        </FormItem>
+      <div className="add-device-container"><div className="add-device-content">
+        <Form horizontal form={this.props.form} style={{marginTop: '-30px'}}>
+          <FormItem
+            id="control-input" label="设备名：" hasFeedback
+            labelCol={labelCol} wrapperCol={wrapperCol}
+            help={(getFieldError('name') || []).join(', ')}
+          >
+            <Input {...nameProps} id="name" placeholder="设备名不大于10个字" />
+          </FormItem>
 
-        <FormItem
-          id="control-textarea" label="设备描述："
-          labelCol={labelCol} wrapperCol={wrapperCol}
-        >
-          <Input {...descProps} type="textarea" id="desc" rows="3" placeholder="对设备的描述"/>
-        </FormItem>
+          <FormItem
+            id="control-textarea" label="设备描述："
+            labelCol={labelCol} wrapperCol={wrapperCol}
+          >
+            <Input {...descProps} type="textarea" id="desc" rows="3" placeholder="对设备的描述"/>
+          </FormItem>
 
-        {this.renderChartOption()}
+          {this.renderChartOption()}
 
-        <FormItem wrapperCol={{...wrapperCol, offset: 7}}>
-          <Button size="large" type="primary" onClick={this.handlerSubmit}>完成创建</Button>
-        </FormItem>
+          <FormItem wrapperCol={{...wrapperCol, offset: 7}}>
+            <Button size="large" type="primary" onClick={this.handlerSubmit}>完成编辑</Button>
+          </FormItem>
 
-      </Form>
+        </Form>
+      </div></div>
     )
   }
 
@@ -144,9 +155,17 @@ class AddDeviceForm extends Component {
   }
 
   renderChartOption() {
+    const {device = {chartOption: {}}} = this.props
+    const {chartOption: {unit, yAxisName}} = device
     const { getFieldProps, getFieldError } = this.props.form;
-    const yNameProps = getFieldProps('yAxisName', {rules: [{required: true, message: '不得为空'}]})
-    const unitProps = getFieldProps('unit', {rules: [{required: true, message: '不得为空'}]})
+    const yNameProps = getFieldProps('yAxisName', {
+      initialValue: yAxisName,
+      rules: [{required: true, message: '不得为空'}]
+    })
+    const unitProps = getFieldProps('unit', {
+      initialValue: unit,
+      rules: [{required: true, message: '不得为空'}]
+    })
 
     return (
       <div>
@@ -158,7 +177,7 @@ class AddDeviceForm extends Component {
           <InputGroup>
             <Col span="12">
               <FormItem help={(getFieldError('yAxisName') || []).join(', ')}>
-                <Input {...yNameProps} id="yAxisName" placeholder="描述"/>
+                <Input {...yNameProps} id="yAxisName" placeholder="描述" defaultValue={yAxisName}/>
               </FormItem>
             </Col>
             <Col span="2">
@@ -166,7 +185,7 @@ class AddDeviceForm extends Component {
             </Col>
             <Col span="6">
               <FormItem help={(getFieldError('unit') || []).join(', ')}>
-                <Input {...unitProps} id="unit" placeholder="单位"/>
+                <Input {...unitProps} id="unit" placeholder="单位" defaultValue={unit}/>
               </FormItem>
             </Col>
           </InputGroup>
@@ -184,6 +203,6 @@ class AddDeviceForm extends Component {
   }
 }
 
-AddDeviceForm = createForm()(AddDeviceForm)
+EditDeviceForm = createForm()(EditDeviceForm)
 
-export default AddDeviceForm
+export default EditDeviceForm
