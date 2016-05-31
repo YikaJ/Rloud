@@ -141,12 +141,13 @@ function getAverage(device) {
     let dataTime = moment(currentData._time)
 
     if(dataTime.isBefore(_30day)) break;
+
     if(dataTime.isAfter(today)) {
       todayResult[dataTime.hour()].push(currentData)
     }else {
       dataTime = dataTime.startOf('day')
       const diffDay = today.diff(dataTime, 'days')
-      prevResult[diffDay].push(currentData)
+      prevResult[diffDay - 1].push(currentData)
     }
     i--
   }
@@ -167,10 +168,10 @@ function getAverage(device) {
     _30Average = prevResult.map((dayDataArr, index) => {
       let result = dayDataArr.reduce((obj) => {
         return Object.assign({}, obj, {
-          [key]: Math.round(_.mean(dayDataArr.map(data => data[key])))
+          [name]: Math.round(_.mean(dayDataArr.map(data => data[name])))
         })
       }, _30Average[index] || {})
-      result.xAxisName = moment().subtract(index, 'days').format('M.D')
+      result.xAxisName = moment().subtract(index + 1, 'days').format('M.D')
       return result
     })
   })
