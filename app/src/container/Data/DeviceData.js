@@ -45,7 +45,7 @@ class DeviceData extends Component {
   renderMenu() {
     return (
       <Menu className="menu pull-left"
-            defaultSelectedKeys={['1']}
+            defaultSelectedKeys={[this.props.navKey || '1']}
             defaultOpenKeys={['chart', 'table']}
             onSelect={this.handleSelectKey}
             mode="inline">

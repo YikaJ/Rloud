@@ -6,7 +6,7 @@ var UserModel = require('../models/UserModel');
 var DeviceModel = require('../models/DeviceModel');
 const _ = require('lodash');
 const { BIND_DEVICE, CHART_DATA } = require('./deviceEvent').eventName
-var nodemailer = require('nodemailer');
+var sendEmail = require('../myUtil/sendEmail');
 
 module.exports = async function chartDataCallback(jsonData, sessionInfo, socket) {
   const { userId, data, deviceId } = jsonData
@@ -28,16 +28,15 @@ async function checkDataRight({data, deviceId}, device, socket) {
     for(let i = 0, len = dataItemList.length; i < len; i++) {
       const {min, max, name} = dataItemList[i]
       if(min !== void 0 && data[name] < min) {
-        errors.push(`${name}的数据小于限定最小值,数据异常`)
+        errors.push(`${name}的数据小于限定最小值,${name}数据异常,${data[name]}`)
       }
       if(max !== void 0 && data[name] > max) {
-        errors.push(`${name}的数据大于限定最大值,数据异常`)
+        errors.push(`${name}的数据大于限定最大值,${name}数据异常,${data[name]}`)
       }
     }
-
     // 若数据有异常:向客户端发通知;将异常数据存入数据库;发邮件异常通知
-    if(!errors.length) {
-
+    if(errors.length) {
+      console.warn('监控警报:数据异常', errors.join(','))
       socket.emit(CHART_DATA, {
         ret: 4,
         msg: errors.join('\n')
@@ -45,7 +44,7 @@ async function checkDataRight({data, deviceId}, device, socket) {
 
       await DeviceModel.findOneAndUpdate({_id: deviceId}, {$push: {data}})
 
-      sendEmail()
+      sendEmail(errors)
     }
   }catch(error) {
     console.error(error)

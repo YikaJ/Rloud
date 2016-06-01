@@ -28,9 +28,9 @@ function getChartData() {
     data: {
       _time: Date.now(),
       xAxisName: `${date.h}:${date.m}:${date.s}`,
-      "室内": parseInt(15 + 10 * Math.random()),
-      "室外": parseInt(5 + 25 * Math.random()),
-      "A实验室": parseInt(25 + 3 * Math.random())
+      "室内": Math.round(16 + 9 * Math.random()),
+      "室外": Math.round(5 + 25 * Math.random()),
+      "A实验室": Math.round(19.8 + 9.9 * Math.random())
     }
   }
 }

@@ -23,12 +23,12 @@ class MyLineChart extends Component {
         <Tooltip />
         {dataItemList.map(({min}, index) => {
           return (
-            min ? <ReferenceLine y={+min} label="最小值" stroke={randomColor(index)} strokeDasharray="20,10,5,5,5,10" alwaysShow/> : ''
+            min ? <ReferenceLine key={index} y={+min} label="最小值" stroke={randomColor(index)} strokeDasharray="20,10,5,5,5,10" alwaysShow/> : ''
           )
         })}
         {dataItemList.map(({max}, index) => {
           return (
-            max ? <ReferenceLine y={+max} label="最大值" stroke={randomColor(index)} strokeDasharray="20,10,5,5,5,10" alwaysShow/> : ''
+            max ? <ReferenceLine key={index} y={+max} label="最大值" stroke={randomColor(index)} strokeDasharray="20,10,5,5,5,10" alwaysShow/> : ''
           )
         })}
         <CartesianGrid strokeDasharray="3 3"/>
