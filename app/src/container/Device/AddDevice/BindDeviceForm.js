@@ -7,6 +7,7 @@ import { Input, Button, Row, Col, message} from 'antd'
 import {browserHistory} from 'react-router'
 import autobind from 'myUtil/autobind'
 import socket from 'myUtil/socketio'
+import {editDevice} from 'action/device'
 
 import {getBindCode} from 'action/device'
 
@@ -22,7 +23,12 @@ class BindDevice extends Component {
     // 开启监听
     socket.on('bden', (res) => {
       const {ret, data, msg} = res
+      const {dispatch, deviceId} = this.props
       if(ret === 0) {
+        dispatch(editDevice({
+          isBind: true,
+          deviceId
+        }))
         message.success('成功绑定,请开始采集数据')
         browserHistory.replace(`/app/data/${data.deviceId}`)
       } else {

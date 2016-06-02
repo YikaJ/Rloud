@@ -10,8 +10,8 @@ const bindDevice = {
   secret,
   type: bindDeviceType,
   userId: "5730c3cfb5625b08701c6b76",
-  deviceId: "57504fdad946000b62881325",
-  bindCode: "ioygr9t9"
+  "bindCode": "ioyhaky0",
+  "deviceId": "57504fdad946000b62881325"
 }
 
 const client = net.connect({port: 3334}, ()=>{

@@ -14,6 +14,8 @@ module.exports = async function chartDataCallback(jsonData, sessionInfo, socket)
   const session = await reloadSession(sessionInfo)
   const device = await DeviceModel.findOne({_id: deviceId})
 
+  if(!device) return 
+
   checkDataRight(jsonData, device, socket)
 
   if(userId === session.user._id) {
@@ -64,6 +66,6 @@ async function sendDataToClient({ data, deviceId }, device, socket) {
       data.xAxisName = moment(data._time).format('HH:mm:ss')
       socket.emit(CHART_DATA, {ret: 0, data:{data, deviceId} })
     } catch (err) {
-      return console.error('io.js Error: ', err)
+      return console.error('chartData.js Error: ', err)
     }
 }
