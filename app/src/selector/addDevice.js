@@ -5,12 +5,13 @@
 import {createSelector} from 'reselect'
 
 const addDeviceContainerSelector = state => state.addDeviceContainer
+const entitiesSelector = state => state.entities
 
 const selector = createSelector(
-  addDeviceContainerSelector,
-  ({currentStep, bindCode, deviceId}) => {
+  addDeviceContainerSelector, entitiesSelector,
+  ({currentStep, bindCode, deviceId}, {me}) => {
     return {
-      currentStep, bindCode, deviceId
+      currentStep, bindCode, deviceId, me
     }
   }
 )

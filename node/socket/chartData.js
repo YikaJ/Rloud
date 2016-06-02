@@ -7,6 +7,7 @@ var DeviceModel = require('../models/DeviceModel');
 const _ = require('lodash');
 const { BIND_DEVICE, CHART_DATA } = require('./deviceEvent').eventName
 var sendEmail = require('../myUtil/sendEmail');
+var moment = require('moment');
 
 module.exports = async function chartDataCallback(jsonData, sessionInfo, socket) {
   const { userId, data, deviceId } = jsonData
@@ -27,10 +28,10 @@ async function checkDataRight({data, deviceId}, device, socket) {
     const {dataItemList} = device.chartOption
     for(let i = 0, len = dataItemList.length; i < len; i++) {
       const {min, max, name} = dataItemList[i]
-      if(min !== void 0 && data[name] < min) {
+      if(min !== '' && data[name] < min) {
         errors.push(`${name}的数据小于限定最小值,${name}数据异常,${data[name]}`)
       }
-      if(max !== void 0 && data[name] > max) {
+      if(max !== '' && data[name] > max) {
         errors.push(`${name}的数据大于限定最大值,${name}数据异常,${data[name]}`)
       }
     }
@@ -60,6 +61,7 @@ async function sendDataToClient({ data, deviceId }, device, socket) {
       if(deviceData.length === 0 || data._time - (_.last(deviceData)._time) > (1000 * 60)) {
         await DeviceModel.findOneAndUpdate({_id: deviceId}, {$push: {data}})
       }
+      data.xAxisName = moment(data._time).format('HH:mm:ss')
       socket.emit(CHART_DATA, {ret: 0, data:{data, deviceId} })
     } catch (err) {
       return console.error('io.js Error: ', err)

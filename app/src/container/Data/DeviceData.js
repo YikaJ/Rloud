@@ -9,6 +9,7 @@ import autobind from 'myUtil/autobind'
 const {SubMenu} = Menu
 
 import {RealTimeData, HistoryTendency} from './DataContent'
+import {PointDataTable, HistoryDataTable} from './DataTable'
 
 class DeviceData extends Component {
 
@@ -39,6 +40,10 @@ class DeviceData extends Component {
         return <RealTimeData {...this.props} device={device}/>
       case '2':
         return <HistoryTendency {...this.props} device={device}/>
+      case '3':
+        return <PointDataTable {...this.props} device={device}/>
+      case '4':
+        return <HistoryDataTable {...this.props} device={device}/>
     }
   }
 
@@ -54,8 +59,8 @@ class DeviceData extends Component {
           <Menu.Item key="2">历史趋势</Menu.Item>
         </SubMenu>
         <SubMenu key="table" title={<span><Icon type="appstore" /><span>数据表格</span></span>}>
-          <Menu.Item key="5">基础数据</Menu.Item>
-          <Menu.Item key="6">数据回档</Menu.Item>
+          <Menu.Item key="3">基础数据</Menu.Item>
+          <Menu.Item key="4">数据回档</Menu.Item>
         </SubMenu>
       </Menu>
     )

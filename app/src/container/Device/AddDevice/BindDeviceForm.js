@@ -37,7 +37,7 @@ class BindDevice extends Component {
   }
 
   render() {
-    const {bindCode, isLoading} = this.props
+    const {bindCode, isLoading, me, deviceId} = this.props
     return (
       <div>
         <Row>
@@ -60,13 +60,28 @@ class BindDevice extends Component {
               <pre className="code-block">{`
 // JSON数据格式,地址是: http://localhost:3334
 {
+  "secret": "Rloud d-server"
   "type": "bden",
-  "user": {
-    "email": "xxx@xxx.com",
-    "password": "xxxxxx"
-  },
-  "device": {
-    "bindCode": "xxxxxx"
+  "userId": "${me._id}",
+  "bindCode": "${bindCode||'xxxxx'}",
+  "deviceId": "${deviceId}"
+}
+`}
+              </pre>
+            </li>
+            <li>绑定完成后,数据通过以下格式传输数据
+              <pre className="code-block">{`
+// JSON数据格式,地址是: http://localhost:3334
+{
+  "secret": "Rloud d-server"
+  "type": "cden",
+  "userId": "${me._id}",
+  "deviceId": "${deviceId}",
+  "data": {
+    "_time": Date,
+    "室内": data,
+    "室外": data,
+    "A实验室": data
   }
 }
 `}

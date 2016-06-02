@@ -24,21 +24,39 @@ class RealTimeData extends Component {
     this.props.dispatch(changeRealTimeChartType(value))
   }
 
+  @autobind
+  updateSocketListener(nextProps) {
+    if(nextProps.device) {
+      socket.removeAllListeners(`cden`)
+      this.setState({realTimeData: []})
+      socket.on('cden', ({ret, data: {data}}) => {
+        if(ret === 0) {
+          const {realTimeData} = this.state
+          const newData = realTimeData.slice()
+          if(newData.length > 10) newData.shift()
+          if(
+            nextProps.device.chartOption.dataItemList.some(({name})=>Object.keys(data).indexOf(name) !== -1)
+          ) {
+            this.setState({realTimeData: newData.concat(data)})
+          }
+
+        }
+      })
+    }
+  }
+
   componentDidMount() {
-    socket.on('cden', ({ret, data: {data}}) => {
-      if(ret === 0) {
-        const {realTimeData} = this.state
+    this.updateSocketListener(this.props)
+  }
 
-        const newData = realTimeData.slice()
-
-        if(newData.length > 10) newData.shift()
-        this.setState({realTimeData: newData.concat(data)})
-      }
-    })
+  componentWillReceiveProps(nextProps) {
+    if(this.props.device !== nextProps.device) {
+      this.updateSocketListener(nextProps)
+    }
   }
 
   componentWillUnmount() {
-    socket.removeAllListeners('cden')
+    socket.removeAllListeners(`cden`)
   }
 
   render() {

@@ -18,16 +18,13 @@ function getTime() {
 }
 
 function getChartData() {
-  const date = getTime()
-
   return {
-    secret, token,
+    secret,
     type: chartDataType,
     userId: "5730c3cfb5625b08701c6b76",
-    deviceId: '574c1c7beb216dd336ef64c3',
+    deviceId: "57504fdad946000b62881325",
     data: {
       _time: Date.now(),
-      xAxisName: `${date.h}:${date.m}:${date.s}`,
       "室内": Math.round(16 + 9 * Math.random()),
       "室外": Math.round(5 + 25 * Math.random()),
       "A实验室": Math.round(19.8 + 9.9 * Math.random())

@@ -16,16 +16,16 @@ class MyBarChart extends Component {
     return (
       <BarChart margin={{ top: 30, right: 30, left: 20, bottom: 5 }} width={1000} height={height} data={data}>
         <XAxis dataKey="xAxisName" label="时间轴" unit="秒"/>
-        <YAxis label={yAxisName}/>
+        <YAxis label={yAxisName} domain={['auto', 'auto']}/>
         <CartesianGrid strokeDasharray="3 3"/>
         {dataItemList.map(({min}, index) => {
           return (
-            min ? <ReferenceLine key={index} y={+min} label="最小值" stroke={randomColor(index)} strokeDasharray="20,10,5,5,5,10" alwaysShow/> : ''
+            min ? <ReferenceLine key={index} y={+min} label="最小值" stroke={randomColor(index)} strokeDasharray="20,10,5,5,5,10"/> : ''
           )
         })}
         {dataItemList.map(({max}, index) => {
           return (
-            max ? <ReferenceLine key={index} y={+max} label="最大值" stroke={randomColor(index)} strokeDasharray="20,10,5,5,5,10" alwaysShow/> : ''
+            max ? <ReferenceLine key={index} y={+max} label="最大值" stroke={randomColor(index)} strokeDasharray="20,10,5,5,5,10"/> : ''
           )
         })}
         <Tooltip />

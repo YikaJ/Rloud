@@ -7,15 +7,11 @@ const token = Date.now().toString(35)
 const bindDeviceType = 'bden'
 
 const bindDevice = {
-  secret, token,
+  secret,
   type: bindDeviceType,
-  user: {
-    email: 'jimklose@icloud.com',
-    password: '5710569'
-  },
-  device: {
-    bindCode: 'iotwhouu'
-  }
+  userId: "5730c3cfb5625b08701c6b76",
+  deviceId: "57504fdad946000b62881325",
+  bindCode: "ioygr9t9"
 }
 
 const client = net.connect({port: 3334}, ()=>{
