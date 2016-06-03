@@ -13,18 +13,22 @@ module.exports = async function chartDataCallback(jsonData, sessionInfo, socket)
   const { userId, data, deviceId } = jsonData
   const session = await reloadSession(sessionInfo)
   const device = await DeviceModel.findOne({_id: deviceId})
+  const {errorDataTime = 0} = session
 
-  if(!device) return 
+  if(!device) return
 
-  checkDataRight(jsonData, device, socket)
+
 
   if(userId === session.user._id) {
+    if((Date.now() - errorDataTime) > 5 * 60 * 1000) {
+      checkDataRight(jsonData, device, socket, session, sessionInfo)
+    }
     sendDataToClient(jsonData, device, socket)
   }
 }
 
 // 检测数据是否异常
-async function checkDataRight({data, deviceId}, device, socket) {
+async function checkDataRight({data, deviceId}, device, socket, session, {sessionStore, sessionID}) {
   try {
     let errors = []
     const {dataItemList} = device.chartOption
@@ -47,7 +51,11 @@ async function checkDataRight({data, deviceId}, device, socket) {
 
       await DeviceModel.findOneAndUpdate({_id: deviceId}, {$push: {data}})
 
-      sendEmail(errors)
+      await sessionStore.set(sessionID,
+        Object.assign({}, session, {errorDataTime: Date.now()})
+      )
+
+      sendEmail(errors, session.user.email)
     }
   }catch(error) {
     console.error(error)
