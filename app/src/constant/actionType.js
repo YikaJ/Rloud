@@ -68,3 +68,6 @@ export const CHANGE_REALTIME_CHART_TYPE = 'CHANGE_REALTIME_CHART_TYPE'
 
 // 改变展示数据的类型
 export const CHANGE_DATA_TYPE = 'CHANGE_DATA_TYPE'
+
+// 更新异常数据
+export const UPDATE_ERROR_DATA = 'UPDATE_ERROR_DATA'

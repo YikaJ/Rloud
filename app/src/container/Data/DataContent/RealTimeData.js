@@ -86,7 +86,7 @@ class RealTimeData extends Component {
         <h3>数据指标</h3>
         <Row>
           {dataItemList.map(({name}, i) => {
-            const dataNum = newestData[name] || '等待...'
+            const dataNum = newestData[name] === void 0 ? '等待...' : newestData[name]
             return (
               <Col className="text-center data-col" key={i} span={span}>
                 <h4>{name}</h4>

@@ -7,7 +7,7 @@ import {
   ADD_DEVICE_REQUEST, ADD_DEVICE_SUCCESS, ADD_DEVICE_FAILURE,
   GET_DEVICE_REQUEST, GET_DEVICE_SUCCESS, GET_DEVICE_FAILURE,
   POST_BIND_CODE_REQUEST, POST_BIND_CODE_SUCCESS, POST_BIND_CODE_FAILURE,
-  CLEAR_DEVICE_FORM, START_TO_BIND_DEVICE,
+  CLEAR_DEVICE_FORM, START_TO_BIND_DEVICE, UPDATE_ERROR_DATA,
   DEL_DEVICE_REQUEST, DEL_DEVICE_SUCCESS, DEL_DEVICE_FAILURE,
   EDIT_DEVICE_REQUEST,  EDIT_DEVICE_SUCCESS, EDIT_DEVICE_FAILURE
 } from 'actionType'
@@ -40,7 +40,7 @@ export function registerDevice(payload) {
   }
 }
 
-export function editDevice(payload) {
+export function editDevice(payload, msg) {
   return {
     [CALL_API]: {
       types: [EDIT_DEVICE_REQUEST,  EDIT_DEVICE_SUCCESS, EDIT_DEVICE_FAILURE],
@@ -50,7 +50,7 @@ export function editDevice(payload) {
         ...payload
       },
       success: ()=>{
-        message.success('修改设备信息成功')
+        msg && message.success(msg)
       }
     }
   }
@@ -102,6 +102,15 @@ export function startToBind(deviceId) {
     type: START_TO_BIND_DEVICE,
     payload: {
       deviceId
+    }
+  }
+}
+
+export function updateErrorData(deviceId, errorData) {
+  return {
+    type: UPDATE_ERROR_DATA,
+    payload: {
+      deviceId, errorData
     }
   }
 }

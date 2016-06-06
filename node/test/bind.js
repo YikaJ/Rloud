@@ -9,9 +9,9 @@ const bindDeviceType = 'bden'
 const bindDevice = {
   secret,
   type: bindDeviceType,
-  userId: "5730c3cfb5625b08701c6b76",
-  "bindCode": "ioyhaky0",
-  "deviceId": "57504fdad946000b62881325"
+  "userId": "575152cfc6ee8cea69a7fad0",
+  "bindCode": "ip1x8hr2",
+  "deviceId": "575382ef7b0d421d90353db1"
 }
 
 const client = net.connect({port: 3334}, ()=>{

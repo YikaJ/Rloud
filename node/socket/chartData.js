@@ -13,16 +13,11 @@ module.exports = async function chartDataCallback(jsonData, sessionInfo, socket)
   const { userId, data, deviceId } = jsonData
   const session = await reloadSession(sessionInfo)
   const device = await DeviceModel.findOne({_id: deviceId})
-  const {errorDataTime = 0} = session
 
   if(!device) return
 
-
-
   if(userId === session.user._id) {
-    if((Date.now() - errorDataTime) > 5 * 60 * 1000) {
-      checkDataRight(jsonData, device, socket, session, sessionInfo)
-    }
+    checkDataRight(jsonData, device, socket, session, sessionInfo)
     sendDataToClient(jsonData, device, socket)
   }
 }
@@ -30,32 +25,56 @@ module.exports = async function chartDataCallback(jsonData, sessionInfo, socket)
 // 检测数据是否异常
 async function checkDataRight({data, deviceId}, device, socket, session, {sessionStore, sessionID}) {
   try {
-    let errors = []
+    let errors = [], errorData = {}
     const {dataItemList} = device.chartOption
     for(let i = 0, len = dataItemList.length; i < len; i++) {
       const {min, max, name} = dataItemList[i]
       if(min !== '' && data[name] < min) {
         errors.push(`${name}的数据小于限定最小值,${name}数据异常,${data[name]}`)
+        errorData = {
+          _time: data._time,
+          time: moment(data._time).format('YYYY/MM/DD HH:mm:ss'),
+          name,
+          data: data[name]
+        }
+        await DeviceModel.findOneAndUpdate(
+          {_id: deviceId}, {
+            $push: {errorData}
+          })
       }
       if(max !== '' && data[name] > max) {
         errors.push(`${name}的数据大于限定最大值,${name}数据异常,${data[name]}`)
+        errorData = {
+          _time: data._time,
+          time: moment(data._time).format('YYYY/MM/DD HH:mm:ss'),
+          name,
+          data: data[name]
+        }
+        await DeviceModel.findOneAndUpdate({_id: deviceId}, {$push: {errorData}})
       }
     }
     // 若数据有异常:向客户端发通知;将异常数据存入数据库;发邮件异常通知
     if(errors.length) {
-      console.warn('监控警报:数据异常', errors.join(','))
-      socket.emit(CHART_DATA, {
-        ret: 4,
-        msg: errors.join('\n')
-      })
-
       await DeviceModel.findOneAndUpdate({_id: deviceId}, {$push: {data}})
+      session = await reloadSession({sessionStore, sessionID})
+      // 五分钟内的异常报警只触发一次
+      if((Date.now() - (session.errorDataTime || 0)) > 5 * 60 * 1000) {
+        await sessionStore.set(sessionID,
+          Object.assign({}, session, {errorDataTime: Date.now()})
+        )
 
-      await sessionStore.set(sessionID,
-        Object.assign({}, session, {errorDataTime: Date.now()})
-      )
+        console.warn('监控警报:数据异常', errors.join(','))
+        socket.emit('data_warning', {
+          ret: 0,
+          data: {
+            device,
+            errorData,
+            msg: errors.join('\n')
+          }
+        })
 
-      sendEmail(errors, session.user.email)
+        sendEmail(errors, session.user.email)
+      }
     }
   }catch(error) {
     console.error(error)

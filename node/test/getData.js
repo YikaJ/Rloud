@@ -21,8 +21,8 @@ function getChartData() {
   return {
     secret,
     type: chartDataType,
-    userId: "5730c3cfb5625b08701c6b76",
-    deviceId: "57504fdad946000b62881325",
+    "userId": "5730c3cfb5625b08701c6b76",
+    "deviceId": "5752900d50a5b6b77ca80bc6",
     data: {
       _time: Date.now(),
       "室内": Math.round(16 + 9 * Math.random()),
@@ -52,7 +52,3 @@ client.on('data', json => {
 client.on('end', () => {
   console.log('TCP 停止连接')
 })
-
-
-
-

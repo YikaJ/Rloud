@@ -19,12 +19,12 @@ module.exports = async function bindDeviceCallback(jsonData, sessionInfo, socket
       try {
         await DeviceModel.findOneAndUpdate({_id: deviceId}, {$set: {isBind: true}})
         //response client
-        socket.emit(BIND_DEVICE, {
+        return socket.emit(BIND_DEVICE, {
           ret: 0,
           data: {deviceId}
         })
       } catch (err) {
-        console.error('io.js Error:', err)
+        console.error('bindDevice.js Error:', err)
         return socket.emit(BIND_DEVICE, {
           ret: 2,
           msg: '绑定失败,请重试...' + err
@@ -41,6 +41,6 @@ module.exports = async function bindDeviceCallback(jsonData, sessionInfo, socket
       })
     }
   } catch(err) {
-    return console.error("io.js Error:", err)
+    return console.error("bindDevice.js Error:", err)
   }
 }

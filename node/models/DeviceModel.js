@@ -16,7 +16,8 @@ let DeviceSchema = new Schema({
   name: {type: String, required: true},
   desc: String,
   chartOption: {type: Object, required: true},
-  data: []
+  data: [],
+  errorData: []
 });
 
 var DeviceModel = mongoose.model('Device', DeviceSchema);

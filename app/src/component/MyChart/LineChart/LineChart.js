@@ -3,7 +3,7 @@
  */
 
 import React, {Component} from 'react'
-import {LineChart, Line, XAxis, YAxis, Tooltip, Legend, CartesianGrid, ReferenceLine} from 'recharts'
+import {LineChart, Line, XAxis, YAxis, Tooltip, Legend, CartesianGrid, ReferenceLine, ResponsiveContainer} from 'recharts'
 import {randomColor} from 'myUtil/random'
 
 class MyLineChart extends Component {
@@ -17,28 +17,30 @@ class MyLineChart extends Component {
     const {chartOption: {dataItemList, yAxisName, unit}} = device
 
     return (
-      <LineChart margin={{ top: 30, right: 30, left: 20, bottom: 5 }} width={1000} height={height} data={data}>
-        <XAxis dataKey="xAxisName" label="时间"/>
-        <YAxis label={yAxisName} unit={unit} domain={['auto', 'auto']}/>
-        <Tooltip />
-        {dataItemList.map(({min}, index) => {
-          return (
-            min ? <ReferenceLine key={index} y={+min} label="最小值" stroke={randomColor(index)} strokeDasharray="20,10,5,5,5,10"/> : ''
-          )
-        })}
-        {dataItemList.map(({max}, index) => {
-          return (
-            max ? <ReferenceLine key={index} y={+max} label="最大值" stroke={randomColor(index)} strokeDasharray="20,10,5,5,5,10"/> : ''
-          )
-        })}
-        <CartesianGrid strokeDasharray="3 3"/>
-        <Legend />
-        {dataItemList.map(({name}, index) => {
-          return (
-            <Line dataKey={name || 'data'} key={index} stroke={randomColor(index)} strokeWidth="1.2" isAnimationActive={!isRealTime} type={type} activeDot={{r: 8}}/>
-          )
-        })}
-      </LineChart>
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart margin={{ top: 30, right: 30, left: 20, bottom: 5 }} width={1000} height={height} data={data}>
+          <XAxis dataKey="xAxisName" label="时间"/>
+          <YAxis label={yAxisName} unit={unit}/>
+          <Tooltip />
+          {dataItemList.map(({min}, index) => {
+            return (
+              min ? <ReferenceLine key={index} y={+min} label="最小值" stroke={randomColor(index)} strokeDasharray="20,10,5,5,5,10"/> : ''
+            )
+          })}
+          {dataItemList.map(({max}, index) => {
+            return (
+              max ? <ReferenceLine key={index} y={+max} label="最大值" stroke={randomColor(index)} strokeDasharray="20,10,5,5,5,10"/> : ''
+            )
+          })}
+          <CartesianGrid strokeDasharray="3 3"/>
+          <Legend />
+          {dataItemList.map(({name}, index) => {
+            return (
+              <Line dataKey={name || 'data'} key={index} stroke={randomColor(index)} strokeWidth="1.2" isAnimationActive={!isRealTime} type={type} activeDot={{r: 8}}/>
+            )
+          })}
+        </LineChart>
+      </ResponsiveContainer>
     )
   }
 }

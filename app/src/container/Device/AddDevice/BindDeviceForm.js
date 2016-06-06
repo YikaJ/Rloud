@@ -28,8 +28,7 @@ class BindDevice extends Component {
         dispatch(editDevice({
           isBind: true,
           deviceId
-        }))
-        message.success('成功绑定,请开始采集数据')
+        }), '成功绑定,请开始采集数据')
         browserHistory.replace(`/app/data/${data.deviceId}`)
       } else {
         message.error(msg)

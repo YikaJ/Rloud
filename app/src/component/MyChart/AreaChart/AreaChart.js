@@ -3,7 +3,7 @@
  */
 
 import React, {Component} from 'react'
-import {AreaChart, Area, XAxis, YAxis, Tooltip, Legend, CartesianGrid, ReferenceLine} from 'recharts'
+import {AreaChart, Area, XAxis, YAxis, Tooltip, Legend, CartesianGrid, ReferenceLine, ResponsiveContainer} from 'recharts'
 import {randomColor} from 'myUtil/random'
 
 class MyAreaChart extends Component {
@@ -14,9 +14,11 @@ class MyAreaChart extends Component {
     const {chartOption: {dataItemList, yAxisName}} = device
 
     return (
+      <ResponsiveContainer width="100%" height="100%">
+
       <AreaChart margin={{ top: 30, right: 30, left: 20, bottom: 5 }} width={1000} height={height} data={data}>
         <XAxis dataKey="xAxisName" label="时间轴" unit="秒"/>
-        <YAxis lable={yAxisName} domain={['auto', 'auto']}/>
+        <YAxis lable={yAxisName}/>
         <CartesianGrid strokeDasharray="3 3"/>
         {dataItemList.map(({min}, index) => {
           return (
@@ -36,6 +38,7 @@ class MyAreaChart extends Component {
           )
         })}
       </AreaChart>
+    </ResponsiveContainer>
     )
   }
 }

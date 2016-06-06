@@ -52,7 +52,7 @@ class EditDeviceForm extends Component {
           unit: values.unit,
           interval: values.interval
         }
-      }))
+      }, '设备编辑成功'))
     });
   }
 

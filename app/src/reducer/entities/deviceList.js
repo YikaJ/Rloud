@@ -5,7 +5,8 @@
 import {
   ADD_DEVICE_SUCCESS, GET_DEVICE_SUCCESS,
   UPDATE_DEVICE_DATA, GET_HISTORY_DATA_SUCCESS,
-  DEL_DEVICE_SUCCESS, EDIT_DEVICE_SUCCESS
+  DEL_DEVICE_SUCCESS, EDIT_DEVICE_SUCCESS,
+  UPDATE_ERROR_DATA
 } from 'actionType'
 
 export default function reducer(state={}, action) {
@@ -65,6 +66,15 @@ export default function reducer(state={}, action) {
         [payload.deviceId]: {
           ...state[payload.deviceId],
           ...payload
+        }
+      }
+
+    case UPDATE_ERROR_DATA:
+      return {
+        ...state,
+        [payload.deviceId]: {
+          ...state[payload.deviceId],
+          errorData: [...(payload.deviceId.errorData || []), errorData]
         }
       }
 
