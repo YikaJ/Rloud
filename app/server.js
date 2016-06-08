@@ -6,7 +6,7 @@ const WebpackDevServer = require('webpack-dev-server')
 const config = require('./webpack.config')
 
 new WebpackDevServer(webpack(config), config.devServer)
-  .listen(config.port, '192.168.8.116', err => {
+  .listen(config.port, 'localhost', err => {
     if(err) console.log(err)
 
     console.log('Listening at localhost:', config.port);

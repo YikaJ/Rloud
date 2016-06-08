@@ -7,13 +7,13 @@ let path = require('path');
 let webpack = require('webpack');
 let port = 8000;
 let srcPath = path.join(__dirname, 'src');
-let publicPath = 'http://192.168.8.116:8000/assets/';
+let publicPath = 'http://localhost:8000/assets/';
 
 module.exports = {
   port: port,
   debug: true,
   entry: [
-    'webpack-dev-server/client?http://192.168.8.116:8000', // WebpackDevServer host and port
+    'webpack-dev-server/client?http://localhost:8000', // WebpackDevServer host and port
     'webpack/hot/only-dev-server', // "only" prevents reload on syntax errors
     './src' // Your appʼs entry point
   ],
